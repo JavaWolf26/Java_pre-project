@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="icon" type="image/png" href="/pages/img.png"/>
+    <style> table th, table {
+        border: 2px solid #009542;
+    }
+
+    td {
+        color: blue;
+        padding: 10px;
+        border: 2px solid #009542;
+    }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th th:width="60">ID</th>
+        <th th:width="300">FirstName</th>
+        <th th:width="300">LastName</th>
+        <th th:width="60">Age</th>
+        <th th:width="300">Email</th>
+    </tr>
+    <tr th:each="userID : ${user}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getFirstName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td th:text="${user.getAge()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+    </tr>
+</table>
+<form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
+    <input type="submit" value="Update User"/>
+</form>
+<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete User"/>
+</form>
+<a href="/users">Back to main menu</a>
+</body>
+</html>
