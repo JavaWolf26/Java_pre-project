@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -36,6 +37,17 @@ public class User {
     @NotEmpty(message = "Email should no be empty")
     @Email(message = "Email should be valid")
     private String email;
+
+    @Column
+    private String password;
+
+    @Transient
+    transient private String confirmPassword;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User() {
     }

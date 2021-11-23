@@ -88,4 +88,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .build();
         return new InMemoryUserDetailsManager(userDetailsService, admin);
     }
+
+    //    idbcAuthentication
+//    @Bean
+//    public JdbcUserDetailsManager detailsManager(DataSource dataSource){
+//        UserDetails user1 = User.builder()
+//                .username("user1")
+//                .password("{bcrypt}$2y$10$5duTig6OVYC5ZSTJJO5tjOvwR/IjjcvVHOoZY7ryJ8mOHGidPhqIC")
+//                .roles("ROLE_User")
+//                .build();
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password("{bcrypt}$2y$10$7snpJ7LL.BaQUrryMm1qLOEF128t/W95fouhBoE64nfZNGNz4BHKW")
+//                .roles("ROLE_Admin", "ROLE_User")
+//                .build();
+//        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+//        if(userDetailsManager.userExists(user1.getUsername())){
+//            userDetailsManager.deleteUser(user1.getUsername());
+//        }
+//        if(userDetailsManager.userExists(admin.getUsername())){
+//            userDetailsManager.deleteUser(admin.getUsername());
+//        }
+//        userDetailsManager.createUser(user1);
+//        userDetailsManager.createUser(admin);
+//        return userDetailsManager;
+//    }
 }
