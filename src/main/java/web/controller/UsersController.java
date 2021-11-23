@@ -1,6 +1,8 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -10,6 +12,7 @@ import web.model.User;
 import web.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,12 +76,23 @@ public class UsersController {
         return "redirect:/users";
     }
 
+    @GetMapping(value = "/")
+    public String getHomePage() {
+        return "indexing";
+    }
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String printWelcome(ModelMap model) {
+    public String printWelcome(ModelMap model, Principal principal) {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
         messages.add("I'm Spring MVC-SECURITY application");
         messages.add("5.5.1 version");
+        messages.add(principal.getName());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        messages.add(authentication.toString());
+        messages.add(authentication.getName());
+
         model.addAttribute("messages", messages);
         return "hello";
     }
@@ -88,5 +102,10 @@ public class UsersController {
         return "login";
     }
 
+    @GetMapping("/usersNo")
+    public String printAllUsersNo(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "usersNo";
+    }
 }
 
