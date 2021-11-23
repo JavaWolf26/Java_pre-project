@@ -16,6 +16,11 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
+//    @Override
+//    public User findByUsername(String username) {
+//        return null;
+//    }
+
     @Override
     public List<User> getAllUsers() {
         return entityManager.createQuery("select u from User u", User.class).getResultList();
@@ -35,7 +40,7 @@ public class UserDaoImpl implements UserDao {
     public void saveUser(User user) {
         Query nativeQuery = entityManager
                 .createNativeQuery("insert into users (firstName, lastName, age, email) values (?, ?, ?, ?)");
-        nativeQuery.setParameter(1, user.getFirstName());
+        nativeQuery.setParameter(1, user.getUsername());
         nativeQuery.setParameter(2, user.getLastName());
         nativeQuery.setParameter(3, user.getAge());
         nativeQuery.setParameter(4, user.getEmail());
@@ -46,7 +51,7 @@ public class UserDaoImpl implements UserDao {
     public void updateUser(Long id, User updateUser) {
         Query nativeQuery = entityManager
                 .createNativeQuery("update users set firstName = ?, lastName=?, age=?, email=? where id = ?");
-        nativeQuery.setParameter(1, updateUser.getFirstName());
+        nativeQuery.setParameter(1, updateUser.getUsername());
         nativeQuery.setParameter(2, updateUser.getLastName());
         nativeQuery.setParameter(3, updateUser.getAge());
         nativeQuery.setParameter(4, updateUser.getEmail());

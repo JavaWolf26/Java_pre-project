@@ -17,11 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "firstName")
     @NotEmpty(message = "FirstName should no be empty")
     @Size(min = 2, max = 30, message = "FirstName should be between 2 and 30 characters")
     @Pattern(regexp = "[А-ЯA-Z][а-яА-Яa-zA-Z\\s\\-]*", message = "FirstName must begin with a capital letter")
-    private String firstName;
+    private String username;
 
     @Column
     @NotEmpty(message = "LastName should no be empty")
@@ -42,7 +42,7 @@ public class User {
     private String password;
 
     @Transient
-    transient private String confirmPassword;
+    private String confirmPassword;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),

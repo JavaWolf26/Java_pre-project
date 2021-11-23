@@ -4,7 +4,10 @@ import web.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao /*extends JpaRepository<User, Long>*/ {
+
+//    User findByUsername(String username);
+
     List<User> getAllUsers();
     User getUserById(Long id);
     void saveUser(User user);

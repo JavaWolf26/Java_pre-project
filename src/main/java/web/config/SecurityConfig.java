@@ -2,14 +2,13 @@ package web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -75,18 +74,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserDetailsService detailsService(){
-        UserDetails userDetailsService = User.builder()
+    protected UserDetailsService detailsService(){
+        UserDetails user = User.builder()
                 .username("user")
-                .password("{bcrypt}$2y$10$5duTig6OVYC5ZSTJJO5tjOvwR/IjjcvVHOoZY7ryJ8mOHGidPhqIC")
+                .password(passwordEncoder()
+                        .encode("100"/*{bcrypt}$2y$10$5duTig6OVYC5ZSTJJO5tjOvwR/IjjcvVHOoZY7ryJ8mOHGidPhqIC*/))
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
                 .username("admin")
-                .password("{bcrypt}$2y$10$7snpJ7LL.BaQUrryMm1qLOEF128t/W95fouhBoE64nfZNGNz4BHKW")
+                .password(passwordEncoder()
+                        .encode("admin"/*{bcrypt}$2y$10$7snpJ7LL.BaQUrryMm1qLOEF128t/W95fouhBoE64nfZNGNz4BHKW*/))
                 .roles("ADMIN", "USER")
                 .build();
-        return new InMemoryUserDetailsManager(userDetailsService, admin);
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+
+    @Bean
+    protected PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(10);
     }
 
     //    idbcAuthentication
