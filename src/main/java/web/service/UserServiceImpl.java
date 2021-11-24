@@ -12,22 +12,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-//    private final RoleDao;
-//    private final BCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao/*, RoleDao roleDao, BCryptPasswordEncoder*/) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
-//    @Override
-//    public void save(User) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        Set<Role> roles = new HashSet<>();
-//        roles.add(roleDao.getById(1L));
-//        user.setRoles(roles);
-//        userDao.save(user);
-//    }
 
     @Transactional
     @Override

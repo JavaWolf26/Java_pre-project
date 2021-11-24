@@ -1,8 +1,11 @@
 package web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +22,13 @@ import web.security.LoginSuccessHandler;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsService userDetailsService;
+
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
@@ -33,11 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .permitAll();
         http
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/users/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/users/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/users/**").hasRole("ADMIN")
@@ -59,33 +71,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user, admin);
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
     @Bean
     protected PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
     }
 
-    //    jdbcAuthentication
-//    @Bean
-//    public JdbcUserDetailsManager detailsManager(DataSource){
-//        UserDetails user1 = User.builder()
-//                .username("user1")
-//                .password(passwordEncoder().encode("user"))
-//                .roles("ROLE_User")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ROLE_Admin", "ROLE_User")
-//                .build();
-//        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-//        if(userDetailsManager.userExists(user1.getUsername())){
-//            userDetailsManager.deleteUser(user1.getUsername());
-//        }
-//        if(userDetailsManager.userExists(admin.getUsername())){
-//            userDetailsManager.deleteUser(admin.getUsername());
-//        }
-//        userDetailsManager.createUser(user1);
-//        userDetailsManager.createUser(admin);
-//        return userDetailsManager;
-//    }
+    @Bean
+    protected DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        return daoAuthenticationProvider;
+    }
 }
