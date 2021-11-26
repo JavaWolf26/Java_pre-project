@@ -3,21 +3,34 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import web.dao.RoleDao;
 import web.dao.UserDao;
+import web.model.Role;
 import web.model.User;
 
+import javax.persistence.PersistenceException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional
@@ -38,9 +51,24 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(id);
     }
 
+//    @Transactional
+//    @Override
+//    public void saveUser(User user) {
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        for (Role role : user.getRoles()) {
+//            role.setId(roleDao.findRoleByAuthority(role.getAuthority()).getId());
+//        }
+//        userDao.saveUser(user);
+//    }
+
     @Transactional
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user, Model model) {
+        model.addAttribute("allRoles", findAllRoles());
+        for (Role role : user.getRoles()) {
+            role.setId(roleDao.findRoleByAuthority(role.getAuthority()).getId());
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.saveUser(user);
     }
 
@@ -54,5 +82,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userDao.deleteUser(id);
+    }
+
+    @Transactional
+    public List<Role> findAllRoles() {
+        return roleDao.findAll();
     }
 }

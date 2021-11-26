@@ -23,6 +23,29 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br/>
+    <label for="password">password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+    <hr/>
+    <label for="roles">Roles</label>
+    <div id="roles">
+        <div class="form-check form-check-inline" th:each="role : ${allRoles}">
+            <label>
+                <input type="checkbox" class="form-check-input" name="roles"
+                       th:id="${role.name}" th:value="${role.name}">
+            </label>
+            <label class="form-check-label" th:for="${role.name}" th:text="${role.name}"></label>
+        </div>
+    </div>
+    <hr/>
+    <div id="enabled-row">
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="roles" th:checked="*{isEnabled()}" id="enabled"
+                   th:field="*{enabled}">
+            <label class="form-check-label" for="enabled">Is enabled</label>
+        </div>
+    </div>
     <hr/>
     <input type="submit" value="Create User">
 </form>
@@ -30,3 +53,4 @@
 <a href="/users">Back to main menu</a>
 </body>
 </html>
+

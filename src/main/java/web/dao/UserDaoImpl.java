@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
         tq.setParameter("email", email);
         User user = tq.getResultList().stream().findAny().orElse(null);
         if (user == null) {
-            throw new UsernameNotFoundException("User with the specified id " + email + " does not exist.");
+            throw new UsernameNotFoundException(String.format("User with the specified id %s does not exist.", email));
         } else return user;
     }
 
@@ -46,11 +46,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) {
-        Query nativeQuery = entityManager
-                .createNativeQuery("insert into users (firstName, lastName, age, email, enabled, password) " +
-                        "values (?, ?, ?, ?, ?, ?)");
-        querySetParameter(user, nativeQuery);
-        nativeQuery.executeUpdate();
+        entityManager.persist(user);
+//        Query nativeQuery = entityManager
+//                .createNativeQuery("insert into users (firstName, lastName, age, email, enabled, password) " +
+//                        "values (?, ?, ?, ?, ?, ?)");
+//        querySetParameter(user, nativeQuery);
+//        nativeQuery.executeUpdate();
     }
 
     @Override
