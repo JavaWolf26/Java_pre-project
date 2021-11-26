@@ -1,6 +1,8 @@
 package web.dao;
 
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
@@ -17,13 +19,13 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public User getUserByName(String email) {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         TypedQuery<User> tq = entityManager.createQuery("select u from User u left join fetch u.roles " +
                 "where u.email = :email", User.class);
         tq.setParameter("email", email);
         User user = tq.getResultList().stream().findAny().orElse(null);
         if (user == null) {
-            throw new ResourceNotFoundException("User with the specified email " + email + " does not exist.");
+            throw new UsernameNotFoundException("User with the specified id " + email + " does not exist.");
         } else return user;
     }
 
