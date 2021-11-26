@@ -19,10 +19,12 @@
 <table>
     <tr>
         <th th:width="60">ID</th>
-        <th th:width="300">FirstName</th>
-        <th th:width="300">LastName</th>
+        <th th:width="100">FirstName</th>
+        <th th:width="100">LastName</th>
         <th th:width="60">Age</th>
-        <th th:width="300">Email</th>
+        <th th:width="100">Email</th>
+        <th th:width="80">Enabled</th>
+        <th th:width="100">Password</th>
     </tr>
     <tr th:each="userID : ${user}">
         <td th:text="${user.getId()}"></td>
@@ -30,14 +32,25 @@
         <td th:text="${user.getLastName()}"></td>
         <td th:text="${user.getAge()}"></td>
         <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.isEnabled()}"></td>
+        <td th:text="${user.getPassword()}"></td>
     </tr>
 </table>
+<br/>
+<hr/>
 <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Update User"/>
 </form>
+<br/>
 <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
     <input type="submit" value="Delete User"/>
 </form>
+<br/>
 <a href="/users">Back to main menu</a>
+<br/>
+<hr/>
+<form action="/logout" method="post">
+    <input type="submit" value="Sing out"/>
+</form>
 </body>
 </html>

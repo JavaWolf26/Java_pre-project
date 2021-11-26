@@ -17,6 +17,17 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
+    public User getUserByName(String email) {
+        TypedQuery<User> tq = entityManager.createQuery("select u from User u left join fetch u.roles " +
+                "where u.email = :email", User.class);
+        tq.setParameter("email", email);
+        User user = tq.getResultList().stream().findAny().orElse(null);
+        if (user == null) {
+            throw new ResourceNotFoundException("User with the specified email " + email + " does not exist.");
+        } else return user;
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
@@ -34,23 +45,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void saveUser(User user) {
         Query nativeQuery = entityManager
-                .createNativeQuery("insert into users (firstName, lastName, age, email) values (?, ?, ?, ?)");
-        nativeQuery.setParameter(1, user.getFirstName());
-        nativeQuery.setParameter(2, user.getLastName());
-        nativeQuery.setParameter(3, user.getAge());
-        nativeQuery.setParameter(4, user.getEmail());
+                .createNativeQuery("insert into users (firstName, lastName, age, email, enabled, password) " +
+                        "values (?, ?, ?, ?, ?, ?)");
+        querySetParameter(user, nativeQuery);
         nativeQuery.executeUpdate();
     }
 
     @Override
     public void updateUser(Long id, User updateUser) {
         Query nativeQuery = entityManager
-                .createNativeQuery("update users set firstName = ?, lastName=?, age=?, email=? where id = ?");
-        nativeQuery.setParameter(1, updateUser.getFirstName());
-        nativeQuery.setParameter(2, updateUser.getLastName());
-        nativeQuery.setParameter(3, updateUser.getAge());
-        nativeQuery.setParameter(4, updateUser.getEmail());
-        nativeQuery.setParameter(5, id);
+                .createNativeQuery("update users set firstName = ?, lastName=?, age=?, email=?, enabled=?, " +
+                        "password=? where id = ?");
+        querySetParameter(updateUser, nativeQuery);
+        nativeQuery.setParameter(7, id);
         nativeQuery.executeUpdate();
     }
 
@@ -59,5 +66,14 @@ public class UserDaoImpl implements UserDao {
         Query nativeQuery = entityManager.createNativeQuery("delete from users where id=?");
         nativeQuery.setParameter(1, id);
         nativeQuery.executeUpdate();
+    }
+
+    private void querySetParameter(User user, Query nativeQuery) {
+        nativeQuery.setParameter(1, user.getFirstName());
+        nativeQuery.setParameter(2, user.getLastName());
+        nativeQuery.setParameter(3, user.getAge());
+        nativeQuery.setParameter(4, user.getEmail());
+        nativeQuery.setParameter(5, user.isEnabled());
+        nativeQuery.setParameter(6, user.getPassword());
     }
 }

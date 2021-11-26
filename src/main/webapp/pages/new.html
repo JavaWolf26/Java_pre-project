@@ -23,8 +23,10 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br/>
+    <hr/>
     <input type="submit" value="Create User">
 </form>
+<br/>
 <a href="/users">Back to main menu</a>
 </body>
 </html>

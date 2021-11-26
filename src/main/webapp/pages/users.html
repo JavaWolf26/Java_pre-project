@@ -19,10 +19,12 @@
 <table>
     <tr>
         <th th:width="60">ID</th>
-        <th th:width="300">FirstName</th>
-        <th th:width="300">LastName</th>
+        <th th:width="100">FirstName</th>
+        <th th:width="100">LastName</th>
         <th th:width="60">Age</th>
-        <th th:width="300">Email</th>
+        <th th:width="100">Email</th>
+        <th th:width="80">Enabled</th>
+        <th th:width="100">Password</th>
     </tr>
     <tr th:each="user : ${users}">
         <td><a th:href="@{/users/{id}(id=${user.getId()})}"
@@ -30,11 +32,19 @@
         <td th:utext="${user.getFirstName()}"></td>
         <td th:utext="${user.getLastName()}"></td>
         <td th:utext="${user.getAge()}"></td>
-        <td th:utext="${user.getEmail()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.isEnabled()}"></td>
+        <td th:text="${user.getPassword()}"></td>
     </tr>
 </table>
 <br/>
 <hr/>
 <a href="/users/new">New User</a>
+<hr/>
+<div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
 </body>
 </html>
