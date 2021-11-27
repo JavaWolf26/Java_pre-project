@@ -6,7 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
-import web.service.UserAnrRoleService;
+import web.service.RoleService;
+import web.service.UserService;
 
 import javax.validation.Valid;
 
@@ -14,44 +15,47 @@ import javax.validation.Valid;
 @RequestMapping("/")
 public class AdminController {
 
-    private final UserAnrRoleService userAnrRoleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserAnrRoleService userAnrRoleService) {
-        this.userAnrRoleService = userAnrRoleService;
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/users")
     public String printAllUsers(Model model) {
-        model.addAttribute("users", userAnrRoleService.getAllUsers());
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/users/{id}")
     public String printUserById(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userAnrRoleService.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
 
     @GetMapping("/users/new")
-    public String createUser(@ModelAttribute("user") User user) {
+    public String createUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("allRoles", roleService.findAllRoles());
         return "new";
     }
 
     @PostMapping("/users")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           Model model) {
+                           @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        model.addAttribute("allRoles", userAnrRoleService.findAllRoles());
-        userAnrRoleService.saveUser(user);
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        userService.saveUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/users/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userAnrRoleService.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "edit";
     }
 
@@ -61,14 +65,14 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        model.addAttribute("allRoles", userAnrRoleService.findAllRoles());
-        userAnrRoleService.updateUser(id, user);
+        model.addAttribute("allRoles", roleService.findAllRoles());
+        userService.updateUser(id, user);
         return "redirect:/users";
     }
 
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-        userAnrRoleService.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 }

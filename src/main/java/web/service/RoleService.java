@@ -1,12 +1,11 @@
-package web.dao;
+package web.service;
 
 import web.model.Role;
 
 import java.util.HashSet;
 import java.util.List;
 
-public interface RoleDao {
+public interface RoleService {
     List<Role> findAllRoles();
-    Role findRoleByName(String name);
     HashSet<Role> getSetOfRoles(String[] roleSet);
 }

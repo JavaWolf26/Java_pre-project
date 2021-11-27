@@ -6,49 +6,57 @@
     <link rel="icon" type="image/png" href="/pages/img.png"/>
 </head>
 <body>
-<form th:method="POST" th:action="@{/users}" th:object="${user}">
-    <label for="firstName">firstName: </label>
-    <input type="text" th:field="*{firstName}" id="firstName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
-    <br/>
-    <label for="lastName">lastName: </label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
-    <br/>
-    <label for="age">age: </label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
-    <br/>
-    <label for="email">email: </label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-    <br/>
-    <label for="password">password: </label>
-    <input type="text" th:field="*{password}" id="password"/>
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-    <br/>
-    <hr/>
-    <label for="roles">Roles</label>
-    <div id="roles">
-        <div class="form-check form-check-inline" th:each="role : ${allRoles}">
-            <label>
-                <input type="checkbox" class="form-check-input" name="roles"
-                       th:id="${role.name}" th:value="${role.name}">
-            </label>
-            <label class="form-check-label" th:for="${role.name}" th:text="${role.name}"></label>
+<div class="container">
+    <form th:method="POST" th:action="@{/users}" th:object="${user}">
+        <label for="firstName">firstName: </label>
+        <input type="text" th:field="*{firstName}" id="firstName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        <br/>
+        <label for="lastName">lastName: </label>
+        <input type="text" th:field="*{lastName}" id="lastName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        <br/>
+        <label for="age">age: </label>
+        <input type="text" th:field="*{age}" id="age"/>
+        <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+        <br/>
+        <label for="email">email: </label>
+        <input type="text" th:field="*{email}" id="email"/>
+        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <br/>
+        <label for="password">password: </label>
+        <input type="text" th:field="*{password}" id="password"/>
+        <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <br/>
+        <br/>
+        <div class="col-md-6 mb-3">
+            <div id="enabled-row">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="enabled" th:checked="*{isEnabled()}"
+                           id="enabled" th:field="*{enabled}">
+                    <label class="form-check-label" for="enabled">Is enabled</label>
+                </div>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <div id="enabled-row">
-        <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" name="roles" th:checked="*{isEnabled()}" id="enabled"
-                   th:field="*{enabled}">
-            <label class="form-check-label" for="enabled">Is enabled</label>
+        <br/>
+        <hr/>
+        <div class="form-row mb-3">
+            <div class="col-md-6 mb-3">
+                <label for="roles">Roles</label>
+                <div id="roles">
+                    <label>
+                        <input type="checkbox" name="nameRoles" value="ROLE_USER"/>
+                    </label>USER
+                    <label>
+                        <input type="checkbox" name="nameRoles" value="ROLE_ADMIN"/>
+                    </label>ADMIN
+                </div>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <input type="submit" value="Create User">
-</form>
+        <hr/>
+        <input type="submit" value="Create User">
+    </form>
+</div>
 <br/>
 <a href="/users">Back to main menu</a>
 </body>

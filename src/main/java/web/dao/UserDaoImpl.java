@@ -18,9 +18,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = entityManager.find(User.class, email);
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-//                user.getPassword(), user.getAuthorities());
         TypedQuery<User> tq = entityManager.createQuery("select u from User u left join fetch u.roles " +
                 "where u.email = :email", User.class);
         tq.setParameter("email", email);

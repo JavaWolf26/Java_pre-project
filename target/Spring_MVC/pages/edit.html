@@ -59,15 +59,9 @@
                     <button class="btn btn-secondary" type="submit" th:text="*{getId()} ? 'Save' : 'Create'"></button>
                     <a class="btn btn-light border-dark" href="/users">Cancel</a>
                 </div>
-                <div>
-                    <div th:if="${persistenceException}" class="alert alert-danger mb-0" role="alert">
-                        User with email <span th:text="*{getEmail()}"></span> is exists!
-                    </div>
-                </div>
             </div>
         </form>
     </div>
-    <div th:replace="layouts/main :: footer"></div>
 
     <br/>
     <hr/>
