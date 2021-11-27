@@ -23,6 +23,47 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br/>
+    <label for="password">password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+    <hr/>
+
+    <div class="container">
+        <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+            <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+            <div class="form-row mb-3">
+                <div class="col-md-6 mb-3">
+                    <label for="roles">Roles</label>
+                    <div id="roles">
+                        <div class="form-check form-check-inline" th:each="role : ${allRoles}">
+                            <label>
+                                <input type="checkbox" class="form-check-input" name="roles" th:id="${role.name}" th:value="${role.name}">
+                            </label>
+                            <label class="form-check-label" th:for="${role.name}" th:text="${role.name}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="enabled-row">&nbsp;</label>
+                    <div id="enabled-row">
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="roles" th:checked="*{isEnabled()}" id="enabled" th:field="*{enabled}">
+                            <label class="form-check-label" for="enabled">Is enabled</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center form-row">
+                <div class="mr-3">
+                    <button class="btn btn-secondary" type="submit" th:text="*{getId()} ? 'Save' : 'Create'"></button>
+                    <a class="btn btn-light border-dark" href="/users">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br/>
     <hr/>
     <input type="submit" value="Update User">
 </form>

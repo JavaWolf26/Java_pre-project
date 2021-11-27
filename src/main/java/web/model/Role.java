@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -20,12 +21,8 @@ public class Role implements GrantedAuthority {
     @Column(unique = true)
     private String name;
 
-    @Transient
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<User> users;
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users = new ArrayList<>();
 
     public Role() {
     }

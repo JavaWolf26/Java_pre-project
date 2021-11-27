@@ -1,6 +1,5 @@
 package web.dao;
 
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
@@ -8,7 +7,6 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -20,6 +18,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User user = entityManager.find(User.class, email);
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+//                user.getPassword(), user.getAuthorities());
         TypedQuery<User> tq = entityManager.createQuery("select u from User u left join fetch u.roles " +
                 "where u.email = :email", User.class);
         tq.setParameter("email", email);
@@ -36,12 +37,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(Long id) {
-        TypedQuery<User> tq = entityManager.createQuery("select u from User u where u.id = :id", User.class);
-        tq.setParameter("id", id);
-        User user = tq.getResultList().stream().findAny().orElse(null);
-        if (user == null) {
-            throw new ResourceNotFoundException("User with the specified id " + id + " does not exist.");
-        } else return user;
+        return entityManager.find(User.class, id);
     }
 
     @Override
@@ -51,29 +47,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(Long id, User updateUser) {
-        Query nativeQuery = entityManager
-                .createNativeQuery("update users set firstName = ?, lastName=?, age=?, email=?, enabled=?, " +
-                        "password=? where id = ?");
-        querySetParameter(updateUser, nativeQuery);
-        nativeQuery.setParameter(7, id);
-        nativeQuery.executeUpdate();
+        entityManager.merge(updateUser);
     }
 
     @Override
     public void deleteUser(Long id) {
-        entityManager.remove(id/*entityManager.find(User.class, id)*/);
-//        Query nativeQuery = entityManager.createNativeQuery("delete from users where id=?");
-//        nativeQuery.setParameter(1, id);
-//        nativeQuery.executeUpdate();
-    }
-//    entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
-
-    private void querySetParameter(User user, Query nativeQuery) {
-        nativeQuery.setParameter(1, user.getFirstName());
-        nativeQuery.setParameter(2, user.getLastName());
-        nativeQuery.setParameter(3, user.getAge());
-        nativeQuery.setParameter(4, user.getEmail());
-        nativeQuery.setParameter(5, user.isEnabled());
-        nativeQuery.setParameter(6, user.getPassword());
+        entityManager.remove(entityManager.find(User.class, id));
     }
 }

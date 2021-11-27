@@ -1,12 +1,9 @@
 package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import web.dao.RoleDao;
 import web.dao.UserDao;
 import web.model.Role;
@@ -14,27 +11,20 @@ import web.model.User;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserAnrRoleServiceImpl implements UserAnrRoleService {
 
     private final UserDao userDao;
     private final RoleDao roleDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserAnrRoleServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
-    @Transactional
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userDao.loadUserByUsername(email);
     }
 
     @Transactional
@@ -78,9 +68,8 @@ public class UserServiceImpl implements UserService {
         userDao.deleteUser(id);
     }
 
-
-//    @Transactional
-//    public List<Role> findAllRoles() {
-//        return roleDao.findAllRoles();
-//    }
+    @Override
+    public List<Role> findAllRoles() {
+        return roleDao.findAllRoles();
+    }
 }

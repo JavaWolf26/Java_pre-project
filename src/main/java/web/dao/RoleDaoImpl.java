@@ -3,13 +3,11 @@ package web.dao;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Repository;
 import web.model.Role;
-import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
@@ -17,10 +15,10 @@ public class RoleDaoImpl implements RoleDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @Override
-//    public List<Role> findAllRoles() {
-//        return entityManager.createQuery("select r from Role r", Role.class).getResultList();
-//    }
+    @Override
+    public List<Role> findAllRoles() {
+        return entityManager.createQuery("select r from Role r", Role.class).getResultList();
+    }
 
 //    @Override
 //    public Role findRoleByAuthority(String authority) throws NoSuchElementException {
