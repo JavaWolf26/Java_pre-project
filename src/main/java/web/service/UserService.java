@@ -2,6 +2,7 @@ package web.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.ui.Model;
 import web.model.Role;
 import web.model.User;
 
@@ -15,5 +16,5 @@ public interface UserService extends UserDetailsService {
     void updateUser(Long id, User updateUser);
     void deleteUser(Long id);
 
-    List<Role> findAllRoles();
+//    List<Role> findAllRoles();
 }

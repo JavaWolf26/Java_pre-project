@@ -47,11 +47,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void saveUser(User user) {
         entityManager.persist(user);
-//        Query nativeQuery = entityManager
-//                .createNativeQuery("insert into users (firstName, lastName, age, email, enabled, password) " +
-//                        "values (?, ?, ?, ?, ?, ?)");
-//        querySetParameter(user, nativeQuery);
-//        nativeQuery.executeUpdate();
     }
 
     @Override
@@ -66,10 +61,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(Long id) {
-        Query nativeQuery = entityManager.createNativeQuery("delete from users where id=?");
-        nativeQuery.setParameter(1, id);
-        nativeQuery.executeUpdate();
+        entityManager.remove(id/*entityManager.find(User.class, id)*/);
+//        Query nativeQuery = entityManager.createNativeQuery("delete from users where id=?");
+//        nativeQuery.setParameter(1, id);
+//        nativeQuery.executeUpdate();
     }
+//    entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 
     private void querySetParameter(User user, Query nativeQuery) {
         nativeQuery.setParameter(1, user.getFirstName());

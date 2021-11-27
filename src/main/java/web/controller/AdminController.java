@@ -34,8 +34,8 @@ public class AdminController {
     }
 
     @GetMapping("/users/new")
-    public String createUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("allRoles", userService.findAllRoles());
+    public String createUser(@ModelAttribute("user") User user/*, Model model*/) {
+//        model.addAttribute("allRoles", userService.findAllRoles());
         return "new";
     }
 
@@ -65,9 +65,17 @@ public class AdminController {
     }
 
     @DeleteMapping("/users/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/users";
     }
+
+
+//    @GetMapping("/{id}/delete")
+//    public String deleteUser(@PathVariable("id") Long userId) {
+//        appService.deleteUser(userId);
+//
+//        return "redirect:/admin";
+//    }
 }
 
