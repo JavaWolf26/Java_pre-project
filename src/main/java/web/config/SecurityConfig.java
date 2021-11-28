@@ -12,6 +12,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.authentication.LoginSuccessHandler;
 import web.dao.UserDao;
 
+import java.util.Base64;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
