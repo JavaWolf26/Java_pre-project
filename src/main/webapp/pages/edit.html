@@ -24,32 +24,28 @@
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br/>
     <label for="password">password: </label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input type="text" style="color:#ffffff" th:field="*{password}" id="password">
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     <br/>
     <br/>
-    <div class="col-md-6 mb-3">
-        <div id="enabled-row">
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="enabled" th:checked="*{isEnabled()}"
-                       id="enabled" th:field="*{enabled}">
-                <label class="form-check-label" for="enabled">Is enabled</label>
-            </div>
+    <div id="enabled-row">
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="enabled" th:checked="*{isEnabled()}"
+                   id="enabled" th:field="*{enabled}">
+            <label class="form-check-label" for="enabled">Is enabled</label>
         </div>
     </div>
     <br/>
     <hr/>
-    <div class="form-row mb-3">
-        <div class="col-md-6 mb-3">
-            <label for="roles">Roles</label>
-            <div id="roles">
-                <label>
-                    <input type="checkbox" name="nameRoles" value="ROLE_USER"/>
-                </label>USER
-                <label>
-                    <input type="checkbox" name="nameRoles" value="ROLE_ADMIN"/>
-                </label>ADMIN
-            </div>
+    <label for="roles">Roles</label>
+    <div id="roles">
+        <div class="form-check form-check-inline">
+            <label>
+                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_USER"/>
+            </label>USER
+            <label>
+                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_ADMIN"/>
+            </label>ADMIN
         </div>
     </div>
     <hr/>

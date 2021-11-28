@@ -12,8 +12,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.authentication.LoginSuccessHandler;
 import web.dao.UserDao;
 
-import java.util.Base64;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDao).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDao).passwordEncoder(bcryptpasswordencoder());
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bcryptpasswordencoder() {
         return new BCryptPasswordEncoder(12);
     }
 

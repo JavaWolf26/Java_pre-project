@@ -18,23 +18,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        TypedQuery<User> tq = entityManager.createQuery("select u from User u left join fetch u.roles " +
-                "where u.email = :email", User.class);
+        TypedQuery<User> tq = entityManager.createQuery("select distinct u from User u " +
+                "left join fetch u.roles where u.email = :email", User.class);
         tq.setParameter("email", email);
-        User user = tq.getResultList().stream().findAny().orElse(null);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User with the specified id %s does not exist.", email));
-        } else return user;
+        return tq.getResultList().stream().findAny().orElse(null);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("select distinct u from User u left join fetch u.roles",
+                User.class).getResultList();
     }
 
     @Override
     public User getUserById(Long id) {
-        return entityManager.find(User.class, id);
+        TypedQuery<User> tq = entityManager.createQuery("select distinct u from User u " +
+                "left join fetch u.roles where u.id = :id", User.class);
+        tq.setParameter("id", id);
+        return tq.getResultList().stream().findAny().orElse(null);
     }
 
     @Override
