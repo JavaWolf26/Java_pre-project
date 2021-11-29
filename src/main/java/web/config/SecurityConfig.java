@@ -10,22 +10,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.authentication.LoginSuccessHandler;
-import web.dao.UserDao;
+import web.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDao userDao;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
-    public SecurityConfig(UserDao userDao) {
-        this.userDao = userDao;
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDao).passwordEncoder(bcryptpasswordencoder());
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(bcryptpasswordencoder());
     }
 
     @Bean
