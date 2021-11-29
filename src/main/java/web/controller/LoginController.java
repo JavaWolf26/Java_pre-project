@@ -13,7 +13,7 @@ import java.util.List;
 public class LoginController {
 
     @GetMapping(value = "/")
-    public String getHomePage(Model model) {
+    public String getWelcome(Model model) {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
         messages.add("I'm Spring MVC-SECURITY application");
@@ -28,7 +28,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/user")
-    public String printWelcome(@CurrentSecurityContext(expression = "authentication.principal") User principal,
+    public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                                Model model) {
         model.addAttribute("user", principal);
         return "user";

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -28,7 +29,13 @@
 </div>
 <br/>
 <br/>
+<div class="img-container" th:if="${user.getRoles().stream().sorted().findFirst().toString().equals('ROLE_ADMIN')}">
+    <a href="/users">Back to main menu</a>
+</div>
 <div th:if="${user.getRoles().stream().sorted().findFirst().toString().equals('ROLE_ADMIN')}">
+    <a href="/users">Back to main menu</a>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
     <a href="/users">Back to main menu</a>
 </div>
 </body>
