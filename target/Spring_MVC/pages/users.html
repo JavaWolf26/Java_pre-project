@@ -32,7 +32,8 @@
         <td th:utext="${user.getFirstName()}"></td>
         <td th:utext="${user.getLastName()}"></td>
         <td th:utext="${user.getAge()}"></td>
-        <td th:text="${user.getEmail()}"></td>
+        <td><a th:href="@{/user/{email}(email=${user.getUsername()})}"
+               th:text="${user.getUsername()}"></a></td>
         <td th:text="${user.isEnabled()}"></td>
         <td><th:block th:each="role : ${user.roles}">
             &nbsp;<span th:text="${role.name}"></span>

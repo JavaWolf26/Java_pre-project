@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,11 +10,11 @@
 <div th:object="${user}">
     <p>User info page</p>
     <hr class="my-4">
-    <p><b>Hello, </b><span th:text="*{getFullName()}"></span></p>
-    <p><b>Your age: </b><span th:text="*{age}"></span></p>
-    <p><b>Your email: </b><span th:text="*{email}"></span></p>
+    <p><b>This is a </b><span th:text="*{getFullName()}"></span></p>
+    <p><b>Age: </b><span th:text="*{age}"></span></p>
+    <p><b>Email: </b><span th:text="*{email}"></span></p>
     <p>
-        <b>Your roles:</b>
+        <b>Roles:</b>
         <th:block th:each="role : *{getRoles()}">
             <span th:text="${role.name}"></span>
         </th:block>
@@ -25,6 +26,14 @@
     <form action="/logout" method="post">
         <input type="submit" value="Logout"/>
     </form>
+</div>
+<br/>
+<br/>
+<div th:if="${user.getRoles().stream().sorted().findFirst().toString().equals('ROLE_ADMIN')}">
+    <a href="/users">Back to main menu</a>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a href="/users">Back to main menu</a>
 </div>
 </body>
 </html>

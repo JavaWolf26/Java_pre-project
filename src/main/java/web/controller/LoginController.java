@@ -22,16 +22,16 @@ public class LoginController {
         return "hello";
     }
 
+    @GetMapping(value = "/login")
+    public String loginPage() {
+        return "login";
+    }
+
     @GetMapping(value = "/user")
     public String printWelcome(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                                Model model) {
         model.addAttribute("user", principal);
         return "user";
-    }
-
-    @GetMapping(value = "/login")
-    public String loginPage() {
-        return "login";
     }
 }
 
