@@ -1,26 +1,29 @@
 package web.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.dao.UserDao;
 import web.model.User;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @PersistenceContext(unitName = "entityManagerFactory")
-    private EntityManager entityManager;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        TypedQuery<User> tq = entityManager.createQuery("select distinct u from User u " +
-                "left join fetch u.roles where u.email = :email", User.class);
-        tq.setParameter("email", email);
-        return tq.getResultList().stream().findAny().orElse(null);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.getUserByName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Could not find user");
+        }
+        return user;
     }
 }
