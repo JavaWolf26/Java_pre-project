@@ -29,14 +29,11 @@
 </div>
 <br/>
 <br/>
-<div class="img-container" th:if="${user.getRoles().stream().sorted().findFirst().toString().equals('ROLE_ADMIN')}">
-    <a href="/users">Back to main menu</a>
-</div>
-<div th:if="${user.getRoles().stream().sorted().findFirst().toString().equals('ROLE_ADMIN')}">
+<div th:if="'ROLE_ADMIN' != ${user.getRoles().stream().sorted().findFirst().toString()}">
     <a href="/users">Back to main menu</a>
 </div>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <a href="/users">Back to main menu</a>
+    <a href="/users">Back to main</a>
 </div>
 </body>
 </html>
