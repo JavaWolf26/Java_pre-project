@@ -34,8 +34,8 @@
     <a href="/users">Back to main menu</a>
 </div>
 
-<div th:if="'ROLE_ADMIN' == ${user.getAuthorities().stream().sorted().findFirst().toString()}">
-    <a href="/users">Back to main menu+</a>
+<div th:if="'ROLE_ADMIN' == ${user.getRoles().stream().sorted().findFirst().toString()}">
+    <a href="/users">Back to main menu +</a>
 </div>
 
 </body>
