@@ -10,9 +10,9 @@
 <div th:object="${user}">
     <p>User info page</p>
     <hr class="my-4">
-    <p><b>This is a</b><span th:text="*{getFullName()}"></span></p>
-    <p><b>Age:</b><span th:text="*{age}"></span></p>
-    <p><b>Email:</b><span th:text="*{email}"></span></p>
+    <p><b>This is a </b><span th:text="*{getFullName()}"></span></p>
+    <p><b>Age: </b><span th:text="*{age}"></span></p>
+    <p><b>Email: </b><span th:text="*{email}"></span></p>
     <p>
         <b>Roles:</b>
         <th:block th:each="role : *{getRoles()}">
@@ -34,7 +34,7 @@
     <a href="/users">Back to main menu</a>
 </div>
 
-<div th:object="${userA}" th:if="' ROLE_USER' != ${user.getAuthorities().stream().sorted().findFirst().toString()}">
+<div th:if="'ROLE_ADMIN' == ${user.getRoles().stream().sorted().findFirst().toString()}">
     <a href="/users">Back to main menu +</a>
 </div>
 
