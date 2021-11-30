@@ -41,10 +41,10 @@ public class AdminController {
     }
 
     @GetMapping(value = "/user/{email}")
-    public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
+    public String printUserByEmail(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                             @PathVariable("email") String email, Model model) {
         model.addAttribute("user", principal);
-        model.addAttribute("users", userDetailsService.loadUserByUsername(email));
+        model.addAttribute("user", userDetailsService.loadUserByUsername(email));
         return "user";
     }
 
@@ -66,13 +66,13 @@ public class AdminController {
     }
 
     @GetMapping("/users/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id) {
+    public String editUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "edit";
     }
 
     @PatchMapping("/users/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                          @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "edit";
