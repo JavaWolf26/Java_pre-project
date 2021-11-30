@@ -40,17 +40,11 @@ public class AdminController {
         return "index";
     }
 
-//    @GetMapping("/user/{email}")
-//    public String printUserById(@PathVariable("email") String email, Model model) {
-//        model.addAttribute("user", userDetailsService.loadUserByUsername(email));
-//        return "user";
-//    }
-
     @GetMapping(value = "/user/{email}")
     public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                             @PathVariable("email") String email, Model model) {
         model.addAttribute("user", principal);
-        model.addAttribute("user", userDetailsService.loadUserByUsername(email));
+        model.addAttribute("users", userDetailsService.loadUserByUsername(email));
         return "user";
     }
 
