@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +40,16 @@ public class AdminController {
         return "index";
     }
 
-    @GetMapping("/user/{email}")
-    public String printUserById(@PathVariable("email") String email, Model model) {
+//    @GetMapping("/user/{email}")
+//    public String printUserById(@PathVariable("email") String email, Model model) {
+//        model.addAttribute("user", userDetailsService.loadUserByUsername(email));
+//        return "user";
+//    }
+
+    @GetMapping(value = "/user/{email}")
+    public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
+                            @PathVariable("email") String email, Model model) {
+        model.addAttribute("user", principal);
         model.addAttribute("user", userDetailsService.loadUserByUsername(email));
         return "user";
     }

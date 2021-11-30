@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       lang="en">
 
 <head>
@@ -29,11 +29,11 @@
 </div>
 <br/>
 <br/>
-<div th:if="'ROLE_ADMIN' != ${user.getRoles().stream().sorted().findFirst().toString()}">
+<div th:if="'ROLE_ADMIN' == ${user.getRoles().stream().sorted().findFirst().toString()}">
     <a href="/users">Back to main menu</a>
 </div>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
+<!--<div sec:authorize="hasRole('ROLE_ADMIN')">
     <a href="/users">Back to main</a>
-</div>
+</div>-->
 </body>
 </html>
