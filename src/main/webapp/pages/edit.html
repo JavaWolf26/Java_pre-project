@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Update User</title>
-    <link rel="icon" type="image/png" href="/pages/img.png"/>
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
