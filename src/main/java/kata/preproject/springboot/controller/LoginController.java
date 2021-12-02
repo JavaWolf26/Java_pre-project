@@ -1,7 +1,5 @@
 package kata.preproject.springboot.controller;
 
-import kata.preproject.springboot.model.User;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +23,6 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String loginPage() {
         return "login";
-    }
-
-    @GetMapping(value = "/user")
-    public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
-                               Model model) {
-        model.addAttribute("user", principal);
-        return "user";
     }
 }
 

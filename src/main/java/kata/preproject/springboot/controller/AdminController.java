@@ -4,8 +4,6 @@ import kata.preproject.springboot.model.User;
 import kata.preproject.springboot.service.RoleService;
 import kata.preproject.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,46 +12,37 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/users")
 public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, UserDetailsService userDetailsService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("")
     public String printAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public String printUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
 
-    @GetMapping(value = "/user/{email}")
-    public String printUserByEmail(@CurrentSecurityContext(expression = "authentication.principal") User principal,
-                                   @PathVariable("email") String email, Model model) {
-        model.addAttribute("user", principal);
-        model.addAttribute("user", userDetailsService.loadUserByUsername(email));
-        return "user";
-    }
-
-    @GetMapping("/users/new")
+    @GetMapping("/new")
     public String createUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", roleService.findAllRoles());
         return "new";
     }
 
-    @PostMapping("/users")
+    @PostMapping("")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                            @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
@@ -64,14 +53,14 @@ public class AdminController {
         return "redirect:/users";
     }
 
-    @GetMapping("/users/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("allRoles", roleService.findAllRoles());
         return "edit";
     }
 
-    @PatchMapping("/users/{id}")
+    @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
@@ -82,7 +71,7 @@ public class AdminController {
         return "redirect:/users";
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/users";
