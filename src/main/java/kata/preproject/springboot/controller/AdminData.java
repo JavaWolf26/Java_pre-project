@@ -27,9 +27,10 @@ public class AdminData {
     public void insertData() {
         roleRepository.save(new Role("ROLE_ADMIN"));
         roleRepository.save(new Role("ROLE_USER"));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findRoleByName("ROLE_ADMIN"));
-        roles.add(roleRepository.findRoleByName("ROLE_USER"));
+
+        Set<Role> rolesAdmin = new HashSet<>();
+        rolesAdmin.add(roleRepository.findRoleByName("ROLE_ADMIN"));
+        rolesAdmin.add(roleRepository.findRoleByName("ROLE_USER"));
         User admin = new User();
         admin.setFirstname("Admin");
         admin.setPassword("$2y$12$ewvWbdBj/34U5MC7wHFKZOeBMyc9xRPBMkdhqq/YzA7gT0z21J6oa");
@@ -37,7 +38,19 @@ public class AdminData {
         admin.setEnabled(true);
         admin.setAge((byte) 10);
         admin.setEmail("admin@email.ru");
-        admin.setRoles(roles);
+        admin.setRoles(rolesAdmin);
         userRepository.save(admin);
+
+        Set<Role> rolesUser = new HashSet<>();
+        rolesUser.add(roleRepository.findRoleByName("ROLE_USER"));
+        User user = new User();
+        admin.setFirstname("User");
+        admin.setPassword("$2y$12$xr1XtdcnDisJRd1XwJNUTOWXPijwJiVidRS750YfQUuay9zjCEEJy");
+        admin.setLastname("Userov");
+        admin.setEnabled(true);
+        admin.setAge((byte) 11);
+        admin.setEmail("user@email.ru");
+        admin.setRoles(rolesUser);
+        userRepository.save(user);
     }
 }
