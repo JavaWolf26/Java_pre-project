@@ -8,10 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Setter
 @Getter
@@ -96,5 +93,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean hasRole(String roleName) {
+        if (null == roles|| 0 == roles.size()) {
+            return false;
+        }
+        Optional<Role> findRole = roles.stream().filter(role -> roleName.equals(role.getName())).findFirst();
+        return findRole.isPresent();
     }
 }

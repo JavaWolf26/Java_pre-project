@@ -40,11 +40,13 @@
     <div id="roles">
         <div class="form-check form-check-inline">
             <label>
-                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_USER"/>
-            </label>USER
-            <label>
-                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_ADMIN"/>
+                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_ADMIN"
+                       th:checked="${user.hasRole('ROLE_ADMIN')}"/>
             </label>ADMIN
+            <label>
+                <input type="checkbox" class="form-check-input" name="nameRoles" value="ROLE_USER"
+                       th:checked="${user.hasRole('ROLE_USER')}"/>
+            </label>USER
         </div>
     </div>
     <hr/>
