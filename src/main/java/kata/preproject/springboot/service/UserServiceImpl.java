@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @Service
@@ -40,14 +43,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-//    @Transactional
-//    @Override
-//    public void updateUser(Long id, User updateUser) {
-//        if (!updateUser.getPassword().contains("$2a$12$")) {
-//            updateUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
-//        }
-//        userRepository.updateUser(id, updateUser);
-//    }
+    @Transactional
+    @Override
+    public void updateUser(Long id, User updateUser) {
+        if (!updateUser.getPassword().contains("$2a$12$")) {
+            updateUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
+        }
+        userRepository.findById(id);
+        userRepository.save(updateUser);
+    }
 
     @Transactional
     @Override

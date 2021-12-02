@@ -65,24 +65,24 @@ public class AdminController {
         return "redirect:/users";
     }
 
-//    @GetMapping("/users/{id}/edit")
-//    public String editUser(Model model, @PathVariable("id") Long id) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "edit";
-//    }
-//
-//    @PatchMapping("/users/{id}")
-//    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-//                         @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
-//        if (bindingResult.hasErrors()) {
-//            return "edit";
-//        }
-//        user.setRoles(roleService.getSetOfRoles(nameRoles));
-//        userService.updateUser(id, user);
-//        return "redirect:/users";
-//    }
+    @GetMapping("/users/{id}/edit")
+    public String editUser(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "edit";
+    }
 
-    @PostMapping("/users/{id}")
+    @PatchMapping("/users/{id}")
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                         @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        userService.updateUser(id, user);
+        return "redirect:/users";
+    }
+
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/users";
