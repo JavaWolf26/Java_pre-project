@@ -27,13 +27,13 @@ public class User implements UserDetails {
     @NotEmpty(message = "FirstName should no be empty")
     @Size(min = 2, max = 30, message = "FirstName should be between 2 and 30 characters")
     @Pattern(regexp = "[А-ЯA-Z][а-яА-Яa-zA-Z\\s\\-]*", message = "FirstName must begin with a capital letter")
-    private String firstName;
+    private String firstname;
 
     @Column
     @NotEmpty(message = "LastName should no be empty")
     @Size(min = 2, max = 30, message = "LastName should be between 2 and 15 characters")
     @Pattern(regexp = "[А-ЯA-Z][а-яА-Яa-zA-Z\\s\\-]*", message = "LastName must begin with a capital letter")
-    private String lastName;
+    private String lastname;
 
     @Column
     @Min(value = 0, message = "Age should be greater than 0")
@@ -48,7 +48,7 @@ public class User implements UserDetails {
     private boolean enabled;
 
     @Column
-    @Size(min = 4, max = 10, message = "Password should be between 4 and 10 characters")
+    @Size(min = 4, message = "Password should be between 4 and 10 characters")
     @NotEmpty(message = "Password should not be empty")
     private String password;
 
@@ -61,7 +61,7 @@ public class User implements UserDetails {
     }
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return firstname + " " + lastname;
     }
 
     @Override
