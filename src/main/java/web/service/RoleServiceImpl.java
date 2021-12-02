@@ -28,6 +28,11 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public HashSet<Role> getSetOfRoles(String[] roleSet) {
-        return roleDao.getSetOfRoles(roleSet);
+        if (roleSet.length != 0) {
+            return roleDao.getSetOfRoles(roleSet);
+        } else {
+            String[] nameRole = {"ROLE_USER"};
+            return roleDao.getSetOfRoles(nameRole);
+        }
     }
 }

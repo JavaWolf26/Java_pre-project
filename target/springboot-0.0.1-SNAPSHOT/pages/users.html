@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style> table th, table {
+        border: 2px solid #009542;
+    }
+
+    td {
+        color: blue;
+        padding: 10px;
+        border: 2px solid #009542;
+    }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th th:width="60">ID</th>
+        <th th:width="100">FirstName</th>
+        <th th:width="100">LastName</th>
+        <th th:width="60">Age</th>
+        <th th:width="100">Email</th>
+        <th th:width="80">Enabled</th>
+        <th th:width="80">Roles</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+               th:text="${user.getId()}"></a></td>
+        <td th:utext="${user.getFirstName()}"></td>
+        <td th:utext="${user.getLastName()}"></td>
+        <td th:utext="${user.getAge()}"></td>
+        <td><a th:href="@{/user/{email}(email=${user.getUsername()})}"
+               th:text="${user.getUsername()}"></a></td>
+        <td th:text="${user.isEnabled()}"></td>
+        <td><th:block th:each="role : ${user.roles}">
+            &nbsp;<span th:text="${role.name}"></span>
+        </th:block></td>
+    </tr>
+</table>
+<br/>
+<hr/>
+<a href="/users/new">New User</a>
+<hr/>
+<div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+</body>
+</html>

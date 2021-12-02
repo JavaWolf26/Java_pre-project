@@ -42,7 +42,7 @@ public class AdminController {
 
     @GetMapping(value = "/user/{email}")
     public String printUserByEmail(@CurrentSecurityContext(expression = "authentication.principal") User principal,
-                            @PathVariable("email") String email, Model model) {
+                                   @PathVariable("email") String email, Model model) {
         model.addAttribute("user", principal);
         model.addAttribute("user", userDetailsService.loadUserByUsername(email));
         return "user";
@@ -56,11 +56,16 @@ public class AdminController {
 
     @PostMapping("/users")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           @RequestParam(value = "nameRoles") String[] nameRoles) {
+                           @RequestParam(value = "nameRoles", required = false) String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        if (nameRoles.length != 0) {
+            user.setRoles(roleService.getSetOfRoles(nameRoles));
+        } else {
+            String[] nameRole = {"ROLE_USER"};
+            user.setRoles(roleService.getSetOfRoles(nameRole));
+        }
         userService.saveUser(user);
         return "redirect:/users";
     }
@@ -73,7 +78,8 @@ public class AdminController {
 
     @PatchMapping("/users/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                         @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
+                             @PathVariable("id") Long id,
+                             @RequestParam(value = "nameRoles", required = false) String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }

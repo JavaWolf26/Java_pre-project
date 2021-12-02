@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: javaw
+Build-Jdk: version 11.0.13
+Implementation-Title: SpringBoot
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: kata.preproject
+Main-Class: ${start-class}
+
