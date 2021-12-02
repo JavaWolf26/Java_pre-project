@@ -44,11 +44,16 @@ public class AdminController {
 
     @PostMapping("")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           @RequestParam(value = "nameRoles") String[] nameRoles) {
+                           @RequestParam(value = "nameRoles", required = false) String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        user.setRoles(roleService.getSetOfRoles(nameRoles));
+        if (nameRoles.length != 0) {
+            user.setRoles(roleService.getSetOfRoles(nameRoles));
+        } else {
+            String[] nameRole = {"ROLE_USER"};
+            user.setRoles(roleService.getSetOfRoles(nameRole));
+        }
         userService.saveUser(user);
         return "redirect:/users";
     }
