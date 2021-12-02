@@ -44,16 +44,11 @@ public class AdminController {
 
     @PostMapping("")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           @RequestParam(value = "nameRoles", required = false) String[] nameRoles) {
+                           @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        if (nameRoles.length != 0) {
-            user.setRoles(roleService.getSetOfRoles(nameRoles));
-        } else {
-            String[] nameRole = {"ROLE_USER"};
-            user.setRoles(roleService.getSetOfRoles(nameRole));
-        }
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.saveUser(user);
         return "redirect:/users";
     }
@@ -67,7 +62,8 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                             @PathVariable("id") Long id, @RequestParam(value = "nameRoles") String[] nameRoles) {
+                             @PathVariable("id") Long id,
+                             @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
