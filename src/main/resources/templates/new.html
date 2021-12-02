@@ -7,13 +7,13 @@
 <body>
 <div class="container">
     <form th:method="POST" th:action="@{/users}" th:object="${user}">
-        <label for="firstName">firstName: </label>
-        <input type="text" th:field="*{firstName}" id="firstName"/>
-        <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        <label for="firstname">firstname: </label>
+        <input type="text" th:field="*{firstname}" id="firstname"/>
+        <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></div>
         <br/>
-        <label for="lastName">lastName: </label>
-        <input type="text" th:field="*{lastName}" id="lastName"/>
-        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        <label for="lastname">lastname: </label>
+        <input type="text" th:field="*{lastname}" id="lastname"/>
+        <div style="color:red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
         <br/>
         <label for="age">age: </label>
         <input type="text" th:field="*{age}" id="age"/>

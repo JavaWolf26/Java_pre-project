@@ -28,8 +28,8 @@
     <tr th:each="user : ${users}">
         <td><a th:href="@{/users/{id}(id=${user.getId()})}"
                th:text="${user.getId()}"></a></td>
-        <td th:utext="${user.getFirstName()}"></td>
-        <td th:utext="${user.getLastName()}"></td>
+        <td th:utext="${user.getFirstname()}"></td>
+        <td th:utext="${user.getLastname()}"></td>
         <td th:utext="${user.getAge()}"></td>
         <td><a th:href="@{/user/{email}(email=${user.getUsername()})}"
                th:text="${user.getUsername()}"></a></td>
