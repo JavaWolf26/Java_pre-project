@@ -34,9 +34,11 @@
     <div class="row">
         <div class="col-md-2">
             <div class="row">
-
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/users">Admin</a>
+                </div>
                 <div class="col-md-12">
-                    <a type="button" th:href="@{/user}" >User</a>
+                    <a type="button" th:href="@{/user}">User</a>
                 </div>
 
             </div>
@@ -64,9 +66,6 @@
                         </th:block>
                     </div>
                 </div>
-            </div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <a href="/users">Back to main</a>
             </div>
         </div>
     </div>
