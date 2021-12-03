@@ -24,6 +24,7 @@ public class UserController {
     @GetMapping(value = "")
     public String printUser(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                             Model model) {
+        model.addAttribute("principal", principal);
         model.addAttribute("user", principal);
         return "user";
     }
@@ -31,7 +32,7 @@ public class UserController {
     @GetMapping(value = "/{email}")
     public String printUserByEmail(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                                    @PathVariable("email") String email, Model model) {
-        model.addAttribute("user", principal);
+        model.addAttribute("principal", principal);
         model.addAttribute("user", userDetailsService.loadUserByUsername(email));
         return "user";
     }

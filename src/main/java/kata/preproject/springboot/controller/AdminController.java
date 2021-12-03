@@ -4,6 +4,8 @@ import kata.preproject.springboot.model.User;
 import kata.preproject.springboot.service.RoleService;
 import kata.preproject.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,15 +19,19 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService, UserDetailsService userDetailsService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("")
-    public String printAllUsers(Model model) {
+    public String printAllUsers(@CurrentSecurityContext(expression = "authentication.principal") User principal,
+                                Model model) {
+        model.addAttribute("principal", principal);
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
