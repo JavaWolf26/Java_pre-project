@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
 public class AdminController {
 
     private final UserService userService;
@@ -25,7 +24,7 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("")
+    @GetMapping("/users")
     public String printAllUsers(@CurrentSecurityContext(expression = "authentication.principal") User principal,
                                 Model model) {
         model.addAttribute("principal", principal);
@@ -33,19 +32,19 @@ public class AdminController {
         return "users";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String printUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/users/new")
     public String createUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", roleService.findAllRoles());
         return "new";
     }
 
-    @PostMapping("")
+    @PostMapping("/users")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                            @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
@@ -56,14 +55,14 @@ public class AdminController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/users/{id}/edit")
     public String editUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("allRoles", roleService.findAllRoles());
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/users/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @PathVariable("id") Long id,
                              @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
@@ -75,7 +74,7 @@ public class AdminController {
         return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/users";
