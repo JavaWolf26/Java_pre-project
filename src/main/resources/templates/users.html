@@ -29,7 +29,7 @@
             <div class="container">
                 <div class="list-group">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users}"
-                       class="list-group-item list-group-item-action">Admin</a>
+                       class="list-group-item list-group-item-action active">Admin</a>
                     <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
                 </div>
             </div>
@@ -39,43 +39,82 @@
                 <br>
                 <h2>Admin panel</h2>
                 <br>
-                <table class="table">
-                    <thead>
-                    <tr class="col text-center">
-                        <th>Id</th>
-                        <th>Full name</th>
-                        <th>Age</th>
-                        <th>E-mail</th>
-                        <th>Enabled</th>
-                        <th>Roles</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tbody>
-                    <tr class="table-active col text-center" th:each="user : ${users}">
-                        <td><a th:text="${user.id}"></a></td>
-                        <td><a class="col font-weight-bold" th:text="${user.fullName}"></a></td>
-                        <td><a th:text="${user.age}"></a></td>
-                        <td><a class="col font-weight-bold" th:href="@{/user/{email}(email=${user.getUsername()})}"
-                               th:text="${user.getUsername()}"></a></td>
-                        <td><a th:text="${user.enabled}"></a></td>
-                        <td>
-                            <th:block th:each="role : ${user.roles}">
-                                <span th:text="${role.name.substring(5)}"></span>
-                            </th:block>
-                        </td>
-                        <td>
-                            <a type="button" th:href="@{/users/{id}(id=${user.id})}"
-                               class="btn btn-sm btn-secondary">Edit</a>
-                            <a type="button" th:href="@{/users/{id}(id=${user.id})}"
-                               class="btn btn-sm btn-secondary">Delete</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabbable" id="tabs-236598">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#tab1" data-toggle="tab">User table</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#tab2" data-toggle="tab">New user</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab1">
+                                        <nav>
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item col text-center">
+                                                    <h5>All users</h5>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <table class="table">
+                                            <thead>
+                                            <tr class="col text-center">
+                                                <th>Id</th>
+                                                <th>Full name</th>
+                                                <th>Age</th>
+                                                <th>E-mail</th>
+                                                <th>Enabled</th>
+                                                <th>Roles</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            <tbody>
+                                            <tr class="table-active col text-center"
+                                                th:each="user : ${users}">
+                                                <td><a th:text="${user.id}"></a></td>
+                                                <td><a class="col font-weight-bold"
+                                                       th:text="${user.fullName}"></a></td>
+                                                <td><a th:text="${user.age}"></a></td>
+                                                <td><a class="col font-weight-bold"
+                                                       th:href="@{/user/{email}(email=${user.getUsername()})}"
+                                                       th:text="${user.getUsername()}"></a></td>
+                                                <td><a th:text="${user.enabled}"></a></td>
+                                                <td>
+                                                    <th:block th:each="role : ${user.roles}">
+                                                        <span th:text="${role.name.substring(5)}"></span>
+                                                    </th:block>
+                                                </td>
+                                                <td>
+                                                    <a type="button" th:href="@{/users/{id}(id=${user.id})}"
+                                                       class="btn btn-sm btn-secondary">Edit</a>
+                                                    <a type="button" th:href="@{/users/{id}(id=${user.id})}"
+                                                       class="btn btn-sm btn-secondary">Delete</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="tab2">
+                                        <nav>
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item col text-center">
+                                                    <h5>Add new user</h5>
+                                                </li>
+                                            </ol>
+                                        </nav>
+
+                                        <a th:href="@{/users/new}">New User</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <a th:href="@{/users/new}">New User</a>
-
         </div>
     </div>
 </div>
