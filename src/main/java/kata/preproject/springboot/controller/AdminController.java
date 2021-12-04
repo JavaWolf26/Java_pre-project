@@ -5,7 +5,6 @@ import kata.preproject.springboot.service.RoleService;
 import kata.preproject.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,13 +18,11 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, UserDetailsService userDetailsService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("")
