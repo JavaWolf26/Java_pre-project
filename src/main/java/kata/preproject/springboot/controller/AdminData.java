@@ -33,7 +33,7 @@
 //        roles.add(roleRepository.findRoleByName("ROLE_USER"));
 //        User admin = new User();
 //        admin.setFirstname("Admin");
-//        admin.setPassword("$2y$12$ewvWbdBj/34U5MC7wHFKZOeBMyc9xRPBMkdhqq/YzA7gT0z21J6oa");
+//        admin.setPassword("$2a$12$ewvWbdBj/34U5MC7wHFKZOeBMyc9xRPBMkdhqq/YzA7gT0z21J6oa");
 //        admin.setLastname("Adminov");
 //        admin.setEnabled(true);
 //        admin.setAge((byte) 10);
@@ -45,7 +45,7 @@
 //        roles.add(roleRepository.findRoleByName("ROLE_USER"));
 //        User user = new User();
 //        user.setFirstname("User");
-//        user.setPassword("$2y$12$xr1XtdcnDisJRd1XwJNUTOWXPijwJiVidRS750YfQUuay9zjCEEJy");
+//        user.setPassword("$2a$12$xr1XtdcnDisJRd1XwJNUTOWXPijwJiVidRS750YfQUuay9zjCEEJy");
 //        user.setLastname("Userov");
 //        user.setEnabled(true);
 //        user.setAge((byte) 11);

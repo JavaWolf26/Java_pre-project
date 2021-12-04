@@ -14,10 +14,10 @@
 <nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
         <div style="color:#ffffff" th:object="${principal}">
-            <h6><b>Your email: </b><span th:text="*{getUsername()}"></span>
+            <h6><b>Your email: </b>&nbsp;<span th:text="*{getUsername()}"></span>&nbsp;
                 <b>and your roles:</b>
                 <th:block th:each="role : *{getAuthorities()}">
-                    <span th:text="${role.getAuthority().substring(5)}"></span>
+                    &nbsp;<span th:text="${role.getAuthority().substring(5)}"></span>
                 </th:block>
             </h6>
         </div>
@@ -40,7 +40,7 @@
                 <br>
                 <h2>User information page</h2>
                 <br>
-                <table class="table">
+                <table class="table table-striped table-bordered">
                     <thead>
                     <tr class="col text-center">
                         <th>Id</th>
@@ -51,7 +51,7 @@
                         <th>Roles</th>
                     </tr>
                     <tbody>
-                    <tr class="table-active col text-center" th:each="user : ${user}">
+                    <tr class="col text-center" th:each="user : ${user}">
                         <td><a th:text="${user.id}"></a></td>
                         <td><a class="col font-weight-bold" th:text="${user.fullName}"></a></td>
                         <td><a th:text="${user.age}"></a></td>
@@ -59,7 +59,7 @@
                         <td><a th:text="${user.enabled}"></a></td>
                         <td>
                             <th:block th:each="role : ${user.roles}">
-                                <span th:text="${role.name.substring(5)}"></span>
+                                &nbsp;<span th:text="${role.name.substring(5)}"></span>&nbsp;
                             </th:block>
                         </td>
                     </tr>

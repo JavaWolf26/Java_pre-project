@@ -26,7 +26,8 @@ public class AdminController {
 
     @GetMapping("/users")
     public String printAllUsers(@CurrentSecurityContext(expression = "authentication.principal") User principal,
-                                Model model) {
+                                Model model, @ModelAttribute("user") User user) {
+        model.addAttribute("allRoles", roleService.findAllRoles());
         model.addAttribute("principal", principal);
         model.addAttribute("users", userService.getAllUsers());
         return "users";
@@ -38,17 +39,11 @@ public class AdminController {
         return "index";
     }
 
-    @GetMapping("/users/new")
-    public String createUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("allRoles", roleService.findAllRoles());
-        return "new";
-    }
-
     @PostMapping("/users")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
+                           @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
-            return "new";
+            return "redirect:/users";
         }
         user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.saveUser(user);
