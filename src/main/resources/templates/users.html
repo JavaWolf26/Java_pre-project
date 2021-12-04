@@ -8,18 +8,6 @@
           crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin page</title>
-
-    <style> table th, table {
-        border: 2px solid #009542;
-    }
-
-    td {
-        color: blue;
-        padding: 10px;
-        border: 2px solid #009542;
-    }
-    </style>
-
 </head>
 <body>
 <nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -32,54 +20,65 @@
                 </th:block>
             </h6>
         </div>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a type="button" th:href="@{/logout}" class="btn btn-outline-light">Logout</a>
-                </li>
-            </ul>
-        </div>
+        <a type="button" th:href="@{/logout}" class="btn btn-sm btn-outline-light">Logout</a>
     </div>
 </nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
+            <div class="container">
+                <div class="list-group">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users}"
+                       class="list-group-item list-group-item-action">Admin</a>
+                    <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
+                </div>
+            </div>
         </div>
         <div class="col-md-10">
+            <div class="container">
+                <br>
+                <h2>Admin panel</h2>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr class="col text-center">
+                        <th>Id</th>
+                        <th>Full name</th>
+                        <th>Age</th>
+                        <th>E-mail</th>
+                        <th>Enabled</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tbody>
+                    <tr class="table-active col text-center" th:each="user : ${users}">
+                        <td><a th:text="${user.id}"></a></td>
+                        <td><a class="col font-weight-bold" th:text="${user.fullName}"></a></td>
+                        <td><a th:text="${user.age}"></a></td>
+                        <td><a class="col font-weight-bold" th:href="@{/user/{email}(email=${user.getUsername()})}"
+                               th:text="${user.getUsername()}"></a></td>
+                        <td><a th:text="${user.enabled}"></a></td>
+                        <td>
+                            <th:block th:each="role : ${user.roles}">
+                                <span th:text="${role.name.substring(5)}"></span>
+                            </th:block>
+                        </td>
+                        <td>
+                            <a type="button" th:href="@{/users/{id}(id=${user.id})}"
+                               class="btn btn-sm btn-secondary">Edit</a>
+                            <a type="button" th:href="@{/users/{id}(id=${user.id})}"
+                               class="btn btn-sm btn-secondary">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <table>
-                <tr>
-                    <th th:width="60">ID</th>
-                    <th th:width="100">FirstName</th>
-                    <th th:width="100">LastName</th>
-                    <th th:width="60">Age</th>
-                    <th th:width="100">Email</th>
-                    <th th:width="80">Enabled</th>
-                    <th th:width="80">Roles</th>
-                </tr>
-                <tr th:each="user : ${users}">
-                    <td><a th:href="@{/users/{id}(id=${user.getId()})}"
-                           th:text="${user.getId()}"></a></td>
-                    <td th:utext="${user.getFirstname()}"></td>
-                    <td th:utext="${user.getLastname()}"></td>
-                    <td th:utext="${user.getAge()}"></td>
-                    <td><a th:href="@{/user/{email}(email=${user.getUsername()})}"
-                           th:text="${user.getUsername()}"></a></td>
-                    <td th:text="${user.isEnabled()}"></td>
-                    <td>
-                        <th:block th:each="role : ${user.roles}">
-                            &nbsp;<span th:text="${role.name}"></span>
-                        </th:block>
-                    </td>
-                </tr>
-            </table>
-
-            <a href="/users/new">New User</a>
+            <a th:href="@{/users/new}">New User</a>
 
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

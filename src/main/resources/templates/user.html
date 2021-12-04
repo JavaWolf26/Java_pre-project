@@ -21,26 +21,18 @@
                 </th:block>
             </h6>
         </div>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a type="button" th:href="@{/logout}" class="btn btn-outline-light">Logout</a>
-                </li>
-            </ul>
-        </div>
+        <a type="button" th:href="@{/logout}" class="btn btn-sm btn-outline-light">Logout</a>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
-            <div class="row">
-                <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a href="/users">Admin</a>
+            <div class="container">
+                <div class="list-group">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users}"
+                       class="list-group-item list-group-item-action">Admin</a>
+                    <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
                 </div>
-                <div class="col-md-12">
-                    <a type="button" th:href="@{/user}">User</a>
-                </div>
-
             </div>
         </div>
         <div class="col-md-10">
@@ -48,24 +40,31 @@
                 <br>
                 <h2>User information page</h2>
                 <br>
-                <div class="row p-3 mb-2 bg-dark text-white font-weight-bold">
-                    <div class="col text-center">Full name</div>
-                    <div class="col text-center">Age</div>
-                    <div class="col text-center">E-mail</div>
-                    <div class="col text-center">Enabled</div>
-                    <div class="col text-center">Roles</div>
-                </div>
-                <div th:each="user : ${user}" class="d-flex align-items-center row p-2 mb-2">
-                    <div class="col font-weight-bold text-center" th:text="${user.getFullName()}"></div>
-                    <div class="col text-center" th:text="${user.age}"></div>
-                    <div class="col text-center" th:text="${user.email}"></div>
-                    <div class="col text-center" th:text="${user.enabled}"></div>
-                    <div class="col text-center">
-                        <th:block th:each="role : ${user.roles}">
-                            <span th:text="${role.name.substring(5)}"></span>
-                        </th:block>
-                    </div>
-                </div>
+                <table class="table">
+                    <thead>
+                    <tr class="col text-center">
+                        <th>Id</th>
+                        <th>Full name</th>
+                        <th>Age</th>
+                        <th>E-mail</th>
+                        <th>Enabled</th>
+                        <th>Roles</th>
+                    </tr>
+                    <tbody>
+                    <tr class="table-active col text-center" th:each="user : ${user}">
+                        <td><a th:text="${user.id}"></a></td>
+                        <td><a class="col font-weight-bold" th:text="${user.fullName}"></a></td>
+                        <td><a th:text="${user.age}"></a></td>
+                        <td><a class="col font-weight-bold" th:text="${user.email}"></a></td>
+                        <td><a th:text="${user.enabled}"></a></td>
+                        <td>
+                            <th:block th:each="role : ${user.roles}">
+                                <span th:text="${role.name.substring(5)}"></span>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
