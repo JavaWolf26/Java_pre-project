@@ -58,8 +58,8 @@
 							</ol>
 						</nav>
 						<div class="table-responsive">
-							<table class="table table-striped table-bordered">
-								<thead>
+							<table class="table table-hover table-bordered">
+								<thead class="thead-light">
 								<tr class="col text-center">
 									<th>Id</th>
 									<th>Full name</th>
@@ -110,7 +110,8 @@
 																	<div class="col-md-6">
 																		<div>
 																			<label class="form-label" for="idUpdate">ID</label>
-																			<p><input class="form-control" type="text" th:field="*{id}" id="idUpdate"/></p>
+																			<p><input class="form-control" type="text" th:field="*{id}" id="idUpdate"
+																			          disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameUpdate">First Name</label>
@@ -137,10 +138,9 @@
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailUpdate">Email</label>
-																			<p><input class="form-control" type="text" th:field="*{email}" id="emailUpdate"
-																			          required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-																			</div>
+																			<p><input class="form-control" type="email" th:field="*{email}" id="emailUpdate"
+																			          aria-describedby="emailUpdateHelp" required/></p>
+																			<small id="emailUpdateHelp" class="form-text text-muted"></small>
 																		</div>
 																		<div>
 																			<label class="form-label" for="passwordUpdate">Password</label>
@@ -152,22 +152,12 @@
 																			</div>
 																		</div>
 																		<div>
-																			<label class="form-label" for="rolesUpdate">Roles</label>
-																			<div id="rolesUpdate">
-																				<div class="form-check form-check-inline">
-																					<p>
-																						<label>
-																							<input type="checkbox" class="form-check-input" name="nameRoles"
-																							       value="ROLE_USER" th:checked="${user.hasRole('ROLE_USER')}"/>
-																						</label>USER&nbsp;
-																						<label>
-																							&nbsp;<input type="checkbox" class="form-check-input" name="nameRoles"
-																							             value="ROLE_ADMIN"
-																							             th:checked="${user.hasRole('ROLE_ADMIN')}"/>
-																						</label>ADMIN
-																					</p>
-																				</div>
-																			</div>
+																			<label class="form-label" for="nameRolesUpdate">Role</label>
+																			<p><select size="2" name="nameRoles" class="form-control form-select" required
+																			        id="nameRolesUpdate" multiple aria-label="multiple select example">
+																				<option value="ROLE_USER">USER</option>
+																				<option value="ROLE_ADMIN">ADMIN</option>
+																			</select></p>
 																		</div>
 																		<div class="checkbox">
 																			<label class="form-label" for="enabledUpdate">
@@ -218,56 +208,43 @@
 																	<div class="col-md-6">
 																		<div>
 																			<label class="form-label" for="idDelete">ID</label>
-																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete"/></p>
+																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete"
+																			          disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameDelete">First Name</label>
 																			<p><input class="form-control" type="text" th:field="*{firstname}"
-																			          id="firstnameDelete" required/></p>
+																			          id="firstnameDelete" disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameDelete">Last Name</label>
 																			<p><input class="form-control" type="text" th:field="*{lastname}"
-																			          id="lastnameDelete" required/></p>
+																			          id="lastnameDelete" disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageDelete">Age</label>
 																			<p><input class="form-control" type="text" th:field="*{age}" id="ageDelete"
-																			          required/></p>
+																			          disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailDelete">Email</label>
 																			<p><input class="form-control" type="text" th:field="*{email}" id="emailDelete"
-																			          required/></p>
+																			          disabled required/></p>
 																		</div>
 																		<div>
-																			<label class="form-label" for="passwordDelete">Password</label>
-																			<p><input class="form-control" type="text" style="color:#ffffff"
-																			          th:field="*{password}" id="passwordDelete" required></p>
+																			<label class="form-label" for="enabledDelete">Enabled</label>
+																			<p><input class="form-control" type="text" th:field="*{enabled}"
+																			          id="enabledDelete" disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="rolesDelete">Roles</label>
-																			<div id="rolesDelete">
-																				<div class="form-check form-check-inline">
-																					<p>
-																						<label>
-																							<input type="checkbox" class="form-check-input" name="nameRoles"
-																							       value="ROLE_USER" th:checked="${user.hasRole('ROLE_USER')}"/>
-																						</label>USER&nbsp;
-																						<label>
-																							&nbsp;<input type="checkbox" class="form-check-input" name="nameRoles"
-																							             value="ROLE_ADMIN"
-																							             th:checked="${user.hasRole('ROLE_ADMIN')}"/>
-																						</label>ADMIN
-																					</p>
-																				</div>
-																			</div>
-																		</div>
-																		<div class="checkbox">
-																			<label class="form-label" for="enabledDelete">
-																				<input type="checkbox" id="enabledDelete" th:checked="*{isEnabled()}"
-																				       th:field="*{enabled}">&nbsp;Is enabled
-																			</label>
+																			<table class="table table-active table-sm col text-left" id="rolesDelete">
+																				<tr th:each="role : ${principal.roles}">
+																					<td class="active">
+																						&nbsp;<a th:text="${role.name.substring(5)}"></a>
+																					</td>
+																				</tr>
+																			</table>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
@@ -343,7 +320,6 @@
 											<label class="form-label" for="nameRoles">Role</label>
 											<p><select name="nameRoles" class="form-control" id="nameRoles" required>
 												<option value="">Select access rights...</option>
-												<option class="divider">-------------------------</option>
 												<option value="ROLE_USER">USER</option>
 												<option value="ROLE_ADMIN">ADMIN</option>
 											</select></p>

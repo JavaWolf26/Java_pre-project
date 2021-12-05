@@ -68,12 +68,5 @@ public class AdminController {
         model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
-
-    @GetMapping("/users/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("userUpdate", userService.getUserById(id));
-        model.addAttribute("allRoles", roleService.findAllRoles());
-        return "edit";
-    }
 }
 
