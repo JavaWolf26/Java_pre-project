@@ -131,7 +131,7 @@
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageUpdate">Age</label>
-																			<p><input class="form-control" type="text" th:field="*{age}" id="ageUpdate"
+																			<p><input class="form-control" type="number" th:field="*{age}" id="ageUpdate"
 																			          required/></p>
 																			<div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
 																			</div>
