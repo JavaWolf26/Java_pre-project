@@ -101,7 +101,7 @@
 														</button>
 													</div>
 													<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}"
-													      th:object="${principal}">
+													      th:object="${user}">
 														<div class="modal-body">
 															<div class="container-fluid">
 																<div class="row">
@@ -199,7 +199,7 @@
 														</button>
 													</div>
 													<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}"
-													      th:object="${principal}">
+													      th:object="${user}">
 														<div class="modal-body">
 															<div class="container-fluid">
 																<div class="row">
@@ -209,7 +209,7 @@
 																		<div>
 																			<label class="form-label" for="idDelete">ID</label>
 																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete"
-																			          disabled/></p>
+																			          disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameDelete">First Name</label>
@@ -239,7 +239,7 @@
 																		<div>
 																			<label class="form-label" for="rolesDelete">Roles</label>
 																			<table class="table table-active table-sm col text-left" id="rolesDelete">
-																				<tr th:each="role : ${principal.roles}">
+																				<tr th:each="role : ${user.roles}">
 																					<td class="active">
 																						&nbsp;<a th:text="${role.name.substring(5)}"></a>
 																					</td>
