@@ -47,7 +47,7 @@ public class AdminController {
     @PatchMapping("/users/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @PathVariable("id") Long id,
-                             @RequestParam(value = "nameRoles", defaultValue = "ROLE_USER") String[] nameRoles) {
+                             @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
             return "redirect:/users#tab1";
         }
@@ -62,11 +62,10 @@ public class AdminController {
         return "redirect:/users#tab1";
     }
 
-
     @GetMapping("/users/{id}")
     public String printUserById(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "index";
+        model.addAttribute("userById", userService.getUserById(id));
+        return "users";
     }
 }
 
