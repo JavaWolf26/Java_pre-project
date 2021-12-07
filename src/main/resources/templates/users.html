@@ -94,55 +94,45 @@
 									</td>
 									<td>
 										<a type="button" class="bg-primary btn btn-sm btn-secondary" data-toggle="modal"
-										        data-target="#edit" th:method="GET" th:action="@{/users/{id}(id=${user.getId()})}">Edit
-										</a>&nbsp;
-										<div class="modal fade" id="edit" role="dialog" aria-labelledby="modalEdit"
-										     aria-hidden="true" tabindex="-1">
+										   data-target="#edit" th:method="GET" th:action="@{/users/{id}(id=${user.getId()})}">
+											Edit</a>&nbsp;
+										&nbsp;<a type="button" class="bg-danger btn btn-sm btn-secondary" data-toggle="modal"
+										         data-target="#delete">Delete</a>
+
+										<div class="modal fade " id="edit" role="dialog" aria-labelledby="modalEdit" aria-hidden="true" tabindex="-1"
+										     data-backdrop="static">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="modalEdit">
-															Edit user
-														</h5>
+														<h5 class="modal-title" id="modalEdit">Edit user</h5>
 														<button type="button" class="close" data-dismiss="modal">
 															<span aria-hidden="true">×</span>
 														</button>
 													</div>
-													<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}"
-													      th:object="${user}">
+													<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${principal}">
 														<div class="modal-body">
 															<div class="container-fluid">
 																<div class="row">
-																	<div class="col-md-3">
-																	</div>
+																	<div class="col-md-3"></div>
 																	<div class="col-md-6">
 																		<div>
 																			<label class="form-label" for="idUpdate">ID</label>
-																			<p><input class="form-control" type="text" th:field="*{id}" id="idUpdate"
-																			          disabled/></p>
+																			<p><input class="form-control" type="text" th:field="*{id}" id="idUpdate" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameUpdate">First Name</label>
-																			<p><input class="form-control" type="text" th:field="*{firstname}"
-																			          id="firstnameUpdate" required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('firstname')}"
-																			     th:errors="*{firstname}">
-																			</div>
+																			<p><input class="form-control" type="text" th:field="*{firstname}" id="firstnameUpdate" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameUpdate">Last Name</label>
-																			<p><input class="form-control" type="text" th:field="*{lastname}"
-																			          id="lastnameUpdate" required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('lastname')}"
-																			     th:errors="*{lastname}">
-																			</div>
+																			<p><input class="form-control" type="text" th:field="*{lastname}" id="lastnameUpdate" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageUpdate">Age</label>
-																			<p><input class="form-control" type="number" th:field="*{age}" id="ageUpdate"
-																			          required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
-																			</div>
+																			<p><input class="form-control" type="number" th:field="*{age}" id="ageUpdate" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailUpdate">Email</label>
@@ -152,12 +142,9 @@
 																		</div>
 																		<div>
 																			<label class="form-label" for="passwordUpdate">Password</label>
-																			<p><input class="form-control" type="text" style="color:#ffffff"
-																			          th:field="*{password}"
+																			<p><input class="form-control" type="text" style="color:#ffffff" th:field="*{password}"
 																			          id="passwordUpdate" required></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('password')}"
-																			     th:errors="*{password}">
-																			</div>
+																			<div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="nameRolesUpdate">Role</label>
@@ -169,84 +156,68 @@
 																		</div>
 																		<div class="checkbox">
 																			<label class="form-label" for="enabledUpdate">
-																				<input type="checkbox" id="enabledUpdate" th:checked="*{isEnabled()}"
-																				       th:field="*{enabled}">&nbsp;Is enabled
+																				<input type="checkbox" id="enabledUpdate" th:checked="*{isEnabled()}" th:field="*{enabled}">
+																				&nbsp;Is enabled
 																			</label>
 																		</div>
 																	</div>
-																	<div class="col-md-3">
-																	</div>
+																	<div class="col-md-3"></div>
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer">
-															<button type="submit" class="btn btn-primary">
-																Edit
-															</button>
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">
-																Close
-															</button>
+															<button type="submit" class="btn btn-primary">Edit</button>
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 														</div>
 													</form>
 												</div>
 											</div>
 										</div>
-										&nbsp;<a type="button" class="bg-danger btn btn-sm btn-secondary" data-toggle="modal"
-										         data-target="#delete">Delete</a>
-										<div class="modal fade" id="delete" role="dialog" aria-labelledby="modalDelete"
-										     aria-hidden="true" tabindex="-1">
+
+										<div class="modal fade" id="delete" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" tabindex="-1"
+										     data-backdrop="static">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="modalDelete">
-															Delete user
-														</h5>
+														<h5 class="modal-title" id="modalDelete">Delete user</h5>
 														<button type="button" class="close" data-dismiss="modal">
 															<span aria-hidden="true">×</span>
 														</button>
 													</div>
-													<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}"
-													      th:object="${user}">
+													<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${principal}">
 														<div class="modal-body">
 															<div class="container-fluid">
 																<div class="row">
-																	<div class="col-md-3">
-																	</div>
+																	<div class="col-md-3"></div>
 																	<div class="col-md-6">
 																		<div>
 																			<label class="form-label" for="idDelete">ID</label>
-																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete"
-																			          disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete" disabled required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameDelete">First Name</label>
-																			<p><input class="form-control" type="text" th:field="*{firstname}"
-																			          id="firstnameDelete" disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{firstname}" id="firstnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameDelete">Last Name</label>
-																			<p><input class="form-control" type="text" th:field="*{lastname}"
-																			          id="lastnameDelete" disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{lastname}" id="lastnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageDelete">Age</label>
-																			<p><input class="form-control" type="text" th:field="*{age}" id="ageDelete"
-																			          disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{age}" id="ageDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailDelete">Email</label>
-																			<p><input class="form-control" type="text" th:field="*{email}" id="emailDelete"
-																			          disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{email}" id="emailDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="enabledDelete">Enabled</label>
-																			<p><input class="form-control" type="text" th:field="*{enabled}"
-																			          id="enabledDelete" disabled required/></p>
+																			<p><input class="form-control" type="text" th:field="*{enabled}" id="enabledDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="rolesDelete">Roles</label>
 																			<table class="table table-active table-sm col text-left" id="rolesDelete">
-																				<tr th:each="role : ${user.roles}">
+																				<tr th:each="role : ${principal.roles}">
 																					<td class="active">
 																						&nbsp;<a th:text="${role.name.substring(5)}"></a>
 																					</td>
@@ -254,23 +225,20 @@
 																			</table>
 																		</div>
 																	</div>
-																	<div class="col-md-3">
-																	</div>
+																	<div class="col-md-3"></div>
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer">
-															<button type="submit" class="btn btn-primary">
-																Delete
-															</button>
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">
-																Close
-															</button>
+															<button type="submit" class="btn btn-primary">Delete</button>
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 														</div>
 													</form>
 												</div>
 											</div>
 										</div>
+
+
 									</td>
 								</tr>
 								</tbody>
@@ -353,6 +321,8 @@
 		</div>
 	</div>
 </div>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"
