@@ -32,6 +32,14 @@
 				   class="list-group-item list-group-item-action active">Admin</a>
 				<a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
 			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<br/><br/><br/>
+						<img width="150px" alt="Image" src="https://platform.kata.academy/uploads/2021/1/1/course_2.jpg"/>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-10">
 			<div class="container">
@@ -85,9 +93,9 @@
 										</th:block>
 									</td>
 									<td>
-										<button class="bg-primary btn btn-sm btn-secondary" data-toggle="modal" data-target="#edit">
-											Edit
-										</button>
+										<a type="button" class="bg-primary btn btn-sm btn-secondary" data-toggle="modal"
+										        data-target="#edit" th:method="GET" th:action="@{/users/{id}(id=${user.getId()})}">Edit
+										</a>&nbsp;
 										<div class="modal fade" id="edit" role="dialog" aria-labelledby="modalEdit"
 										     aria-hidden="true" tabindex="-1">
 											<div class="modal-dialog" role="document">
@@ -154,7 +162,7 @@
 																		<div>
 																			<label class="form-label" for="nameRolesUpdate">Role</label>
 																			<p><select size="2" name="nameRoles" class="form-control form-select" required
-																			        id="nameRolesUpdate" multiple aria-label="multiple select example">
+																			           id="nameRolesUpdate" multiple aria-label="multiple select example">
 																				<option value="ROLE_USER">USER</option>
 																				<option value="ROLE_ADMIN">ADMIN</option>
 																			</select></p>
@@ -183,9 +191,8 @@
 												</div>
 											</div>
 										</div>
-										<button class="bg-danger btn btn-sm btn-secondary" data-toggle="modal" data-target="#delete">
-											Delete
-										</button>
+										&nbsp;<a type="button" class="bg-danger btn btn-sm btn-secondary" data-toggle="modal"
+										         data-target="#delete">Delete</a>
 										<div class="modal fade" id="delete" role="dialog" aria-labelledby="modalDelete"
 										     aria-hidden="true" tabindex="-1">
 											<div class="modal-dialog" role="document">
