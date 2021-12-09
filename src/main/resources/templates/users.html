@@ -96,14 +96,14 @@
 										<a type="button" class="bg-primary btn btn-sm btn-secondary" data-toggle="modal"
 										   th:data-target="${'#editUserModal'+ user.getId()}">Edit</a>&nbsp;
 										<a type="button" class="bg-danger btn btn-sm btn-secondary" data-toggle="modal"
-										   data-target="#delete">Delete</a>
+										   th:data-target="${'#deleteUserModal'+ user.getId()}">Delete</a>
 
-										<div class="modal fade" aria-labelledby="modal" aria-hidden="true"
+										<div class="modal fade" aria-labelledby="modalEdit" aria-hidden="true" role="dialog"
 										     tabindex="-1" data-backdrop="static" th:id="${'editUserModal'+ user.getId()}">
 											<div class="modal-dialog" role="dialog">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="modal">Edit user</h5>
+														<h5 class="modal-title" id="modalEdit">Edit user</h5>
 														<button type="button" class="close" data-dismiss="modal">
 															<span aria-hidden="true">×</span>
 														</button>
@@ -172,10 +172,9 @@
 											</div>
 										</div>
 
-										<div class="modal fade" id="delete" role="dialog" aria-labelledby="modalDelete" aria-hidden="true"
-										     tabindex="-1"
-										     data-backdrop="static">
-											<div class="modal-dialog" role="document">
+										<div class="modal fade" role="dialog" aria-labelledby="modalDelete" aria-hidden="true"
+										     tabindex="-1" data-backdrop="static" th:id="${'deleteUserModal'+ user.getId()}">
+											<div class="modal-dialog" role="dialog">
 												<div class="modal-content">
 													<div class="modal-header">
 														<h5 class="modal-title" id="modalDelete">Delete user</h5>
@@ -183,8 +182,7 @@
 															<span aria-hidden="true">×</span>
 														</button>
 													</div>
-													<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}"
-													      th:object="${user}">
+													<form role="form" th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
 														<div class="modal-body">
 															<div class="container-fluid">
 																<div class="row">
@@ -192,32 +190,32 @@
 																	<div class="col-md-6">
 																		<div>
 																			<label class="form-label" for="idDelete">ID</label>
-																			<p><input class="form-control" type="text" th:field="*{id}" id="idDelete" disabled
-																			          required/></p>
+																			<p><input class="form-control" type="text" name="id" id="idDelete" disabled
+																			           required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameDelete">First Name</label>
-																			<p><input class="form-control" type="text" th:field="*{firstname}"
+																			<p><input class="form-control" type="text" name="firstname"
 																			          id="firstnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameDelete">Last Name</label>
-																			<p><input class="form-control" type="text" th:field="*{lastname}"
+																			<p><input class="form-control" type="text" name="lastname"
 																			          id="lastnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageDelete">Age</label>
-																			<p><input class="form-control" type="text" th:field="*{age}" id="ageDelete"
+																			<p><input class="form-control" type="text" name="age" id="ageDelete"
 																			          disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailDelete">Email</label>
-																			<p><input class="form-control" type="text" th:field="*{email}" id="emailDelete"
+																			<p><input class="form-control" type="text" name="email" id="emailDelete"
 																			          disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="enabledDelete">Enabled</label>
-																			<p><input class="form-control" type="text" th:field="*{enabled}"
+																			<p><input class="form-control" type="text" name="enabled"
 																			          id="enabledDelete" disabled/></p>
 																		</div>
 																		<div>
@@ -348,22 +346,5 @@
         });
     });
 </script>
-<!--<script>-->
-<!--    $(document).ready(function (){-->
-<!--        $('.table .btn').on('click', function (event){-->
-<!--            event.preventDefault();-->
-<!--            const href = $(this).attr('href');-->
-<!--            $.get(href, function (user, status){-->
-<!--                $('#idUpdate').val(user.id);-->
-<!--                $('#firstnameUpdate').val(user.firstname);-->
-<!--                $('#lastnameUpdate').val(user.lastname);-->
-<!--                $('#ageUpdate').val(user.age);-->
-<!--                $('#emailUpdate').val(user.email);-->
-<!--                $('#passwordUpdate').val(user.password);-->
-<!--            });-->
-<!--            $('edit').modal();-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
