@@ -37,7 +37,7 @@ public class AdminController {
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                            @RequestParam(value = "nameRoles") String[] nameRoles) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/users#tab2";
+            return "redirect:/users#tab1";
         }
         user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.saveUser(user);
@@ -66,6 +66,12 @@ public class AdminController {
     public String printUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userById", userService.getUserById(id));
         return "users";
+    }
+
+    @RequestMapping("/users/{id}")
+    @ResponseBody
+    public User getOne(@PathVariable("id") Long id){
+        return userService.getUserById(id);
     }
 }
 
