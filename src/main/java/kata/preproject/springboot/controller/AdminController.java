@@ -61,17 +61,5 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/users#tab1";
     }
-
-    @GetMapping("/users/{id}")
-    public String printUserById(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("userById", userService.getUserById(id));
-        return "users";
-    }
-
-    @RequestMapping("/users/{id}")
-    @ResponseBody
-    public User getOne(@PathVariable("id") Long id){
-        return userService.getUserById(id);
-    }
 }
 

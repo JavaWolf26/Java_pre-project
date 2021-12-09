@@ -97,7 +97,6 @@
 										   th:data-target="${'#editUserModal'+ user.getId()}">Edit</a>&nbsp;
 										<a type="button" class="bg-danger btn btn-sm btn-secondary" data-toggle="modal"
 										   th:data-target="${'#deleteUserModal'+ user.getId()}">Delete</a>
-
 										<div class="modal fade" aria-labelledby="modalEdit" aria-hidden="true" role="dialog"
 										     tabindex="-1" data-backdrop="static" th:id="${'editUserModal'+ user.getId()}">
 											<div class="modal-dialog" role="dialog">
@@ -117,33 +116,35 @@
 																		<div>
 																			<label class="form-label" for="idUpdate">ID</label>
 																			<p><input class="form-control" type="text" name="id" id="idUpdate"
-																			          disabled/></p>
+																			          th:value="${user.id}" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameUpdate">First Name</label>
 																			<p><input class="form-control" type="text" name="firstname"
-																			          id="firstnameUpdate" required/></p>
+																			          id="firstnameUpdate" th:value="${user.firstname}" required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameUpdate">Last Name</label>
 																			<p><input class="form-control" type="text" name="lastname"
-																			          id="lastnameUpdate" required/></p>
+																			          id="lastnameUpdate" th:value="${user.lastname}" required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageUpdate">Age</label>
 																			<p><input class="form-control" type="number" name="age" id="ageUpdate"
-																			          required/></p>
+																			          th:value="${user.age}" required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailUpdate">Email</label>
 																			<p><input class="form-control" type="email" name="email" id="emailUpdate"
-																			          aria-describedby="emailUpdateHelp" required/></p>
+																			          th:value="${user.email}" aria-describedby="emailUpdateHelp"
+																			          required/></p>
 																			<small id="emailUpdateHelp" class="form-text text-muted"></small>
 																		</div>
 																		<div>
 																			<label class="form-label" for="passwordUpdate">Password</label>
 																			<p><input class="form-control" type="text" style="color:#ffffff"
-																			          name="password" id="passwordUpdate" required></p>
+																			          th:value="${user.password}" name="password" id="passwordUpdate"
+																			          required></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="nameRolesUpdate">Role</label>
@@ -155,7 +156,8 @@
 																		</div>
 																		<div class="checkbox">
 																			<label class="form-label" for="enabledUpdate">
-																				<input type="checkbox" id="enabledUpdate" name="enabled">&nbsp;Is enabled
+																				<input type="checkbox" id="enabledUpdate" th:checked="*{user.isEnabled()}"
+																				       name="enabled">&nbsp;Is enabled
 																			</label>
 																		</div>
 																	</div>
@@ -171,7 +173,6 @@
 												</div>
 											</div>
 										</div>
-
 										<div class="modal fade" role="dialog" aria-labelledby="modalDelete" aria-hidden="true"
 										     tabindex="-1" data-backdrop="static" th:id="${'deleteUserModal'+ user.getId()}">
 											<div class="modal-dialog" role="dialog">
@@ -191,32 +192,32 @@
 																		<div>
 																			<label class="form-label" for="idDelete">ID</label>
 																			<p><input class="form-control" type="text" name="id" id="idDelete" disabled
-																			           required/></p>
+																			          th:value="${user.id}" required/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="firstnameDelete">First Name</label>
 																			<p><input class="form-control" type="text" name="firstname"
-																			          id="firstnameDelete" disabled/></p>
+																			          th:value="${user.firstname}" id="firstnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameDelete">Last Name</label>
 																			<p><input class="form-control" type="text" name="lastname"
-																			          id="lastnameDelete" disabled/></p>
+																			          th:value="${user.lastname}" id="lastnameDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageDelete">Age</label>
 																			<p><input class="form-control" type="text" name="age" id="ageDelete"
-																			          disabled/></p>
+																			          th:value="${user.age}" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailDelete">Email</label>
 																			<p><input class="form-control" type="text" name="email" id="emailDelete"
-																			          disabled/></p>
+																			          th:value="${user.email}" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="enabledDelete">Enabled</label>
 																			<p><input class="form-control" type="text" name="enabled"
-																			          id="enabledDelete" disabled/></p>
+																			          th:value="${user.enabled}" id="enabledDelete" disabled/></p>
 																		</div>
 																		<div>
 																			<label class="form-label" for="rolesDelete">Roles</label>
@@ -241,7 +242,6 @@
 												</div>
 											</div>
 										</div>
-
 									</td>
 								</tr>
 								</tbody>
