@@ -29,12 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User getUserById(Long id) {
-        return userRepository.getById(id);
-    }
-
-    @Transactional
-    @Override
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
