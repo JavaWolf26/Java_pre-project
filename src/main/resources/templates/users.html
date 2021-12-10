@@ -122,22 +122,16 @@
 																			<label class="form-label" for="firstnameUpdate">First Name</label>
 																			<p><input class="form-control" type="text" name="firstname"
 																			          id="firstnameUpdate" th:value="${user.firstname}" required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('firstname')}"
-																			     th:errors="*{user.firstname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameUpdate">Last Name</label>
 																			<p><input class="form-control" type="text" name="lastname"
 																			          id="lastnameUpdate" th:value="${user.lastname}" required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('lastname')}"
-																			     th:errors="*{user.lastname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageUpdate">Age</label>
 																			<p><input class="form-control" type="number" name="age" id="ageUpdate"
 																			          th:value="${user.age}" required/></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('age')}"
-																			     th:errors="*{user.age}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailUpdate">Email</label>
@@ -151,8 +145,6 @@
 																			<p><input class="form-control" type="text" style="color:#ffffff"
 																			          th:value="${user.password}" name="password" id="passwordUpdate"
 																			          required></p>
-																			<div style="color:red" th:if="${#fields.hasErrors('password')}"
-																			     th:errors="*{user.password}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="nameRolesUpdate">Role</label>
