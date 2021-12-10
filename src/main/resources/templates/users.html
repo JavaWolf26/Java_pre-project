@@ -122,16 +122,22 @@
 																			<label class="form-label" for="firstnameUpdate">First Name</label>
 																			<p><input class="form-control" type="text" name="firstname"
 																			          id="firstnameUpdate" th:value="${user.firstname}" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('firstname')}"
+																			     th:errors="*{user.firstname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="lastnameUpdate">Last Name</label>
 																			<p><input class="form-control" type="text" name="lastname"
 																			          id="lastnameUpdate" th:value="${user.lastname}" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('lastname')}"
+																			     th:errors="*{user.lastname}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="ageUpdate">Age</label>
 																			<p><input class="form-control" type="number" name="age" id="ageUpdate"
 																			          th:value="${user.age}" required/></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('age')}"
+																			     th:errors="*{user.age}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="emailUpdate">Email</label>
@@ -145,6 +151,8 @@
 																			<p><input class="form-control" type="text" style="color:#ffffff"
 																			          th:value="${user.password}" name="password" id="passwordUpdate"
 																			          required></p>
+																			<div style="color:red" th:if="${#fields.hasErrors('password')}"
+																			     th:errors="*{user.password}"></div>
 																		</div>
 																		<div>
 																			<label class="form-label" for="nameRolesUpdate">Role</label>
@@ -321,30 +329,5 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"></script>
-<script>
-    $(document).ready(() => {
-        let url = location.href.replace(/\/$/, "");
-        if (location.hash) {
-            const hash = url.split("#");
-            $('#myTab a[href="#' + hash[1] + '"]').tab("show");
-            url = location.href.replace(/\/#/, "#");
-            history.replaceState(null, null, url);
-            setTimeout(() => {
-                $(window).scrollTop(0);
-            }, 400);
-        }
-        $('a[data-toggle="tab"]').on("click", function () {
-            let newUrl;
-            const hash = $(this).attr("href");
-            if (hash === "#tab1") {
-                newUrl = url.split("#")[0];
-            } else {
-                newUrl = url.split("#")[0] + hash;
-            }
-            newUrl += "/";
-            history.replaceState(null, null, newUrl);
-        });
-    });
-</script>
 </body>
 </html>
