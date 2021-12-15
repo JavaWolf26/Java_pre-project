@@ -1,33 +1,38 @@
 package kata.preproject.springboot.model;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public final class Role extends AbstractEntity<Long> implements GrantedAuthority {
 
     @Column(unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
+
+    public Role() {
+    }
 
     public Role(String name) {
         this.name = name;
     }
 
-    public Role() {
+    public Role(Long id) {
+        this.setId(id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

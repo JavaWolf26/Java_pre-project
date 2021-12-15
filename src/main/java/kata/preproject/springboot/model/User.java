@@ -3,18 +3,20 @@ package kata.preproject.springboot.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public final class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,27 +34,24 @@ public class User implements UserDetails {
     @Pattern(regexp = "[А-ЯA-Z][а-яА-Яa-zA-Z\\s\\-]*", message = "LastName must begin with a capital letter")
     private String lastname;
 
-    @Column
-    @Min(value = 0, message = "Age should be greater than 0")
-    private Byte age;
-
     @Column(unique = true)
     @NotEmpty(message = "Email should no be empty")
     @Email(message = "Email should be valid")
     private String email;
 
     @Column
-    private boolean enabled;
-
-    @Column
     @Size(min = 4, message = "Password should be between 4 and 10 characters")
     @NotEmpty(message = "Password should not be empty")
     private String password;
 
+    @Column
+    @Min(value = 0, message = "Age should be greater than 0")
+    private Byte age;
+
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -61,13 +60,17 @@ public class User implements UserDetails {
         return firstname + " " + lastname;
     }
 
+    public boolean hasRole(String roleName) {
+        if (null == roles || 0 == roles.size()) {
+            return false;
+        }
+        Optional<Role> findRole = roles.stream().filter(role -> roleName.equals(role.getName())).findFirst();
+        return findRole.isPresent();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
+        return roles;
     }
 
     @Override
@@ -92,14 +95,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
-    }
-
-    public boolean hasRole(String roleName) {
-        if (null == roles|| 0 == roles.size()) {
-            return false;
-        }
-        Optional<Role> findRole = roles.stream().filter(role -> roleName.equals(role.getName())).findFirst();
-        return findRole.isPresent();
+        return true;
     }
 }

@@ -3,10 +3,15 @@ package kata.preproject.springboot.service;
 import kata.preproject.springboot.model.User;
 import kata.preproject.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import java.util.Objects;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -19,11 +24,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Could not find user");
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", email)));
+    }
+
+    public String getPage(Model model, @Nullable Authentication auth) {
+        if (Objects.isNull(auth)) {
+            return "hello";
         }
-        return user;
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("user", user);
+        if (user.hasRole("ROLE_ADMIN")) {
+            return "admin";
+        } else
+            return "user";
     }
 }

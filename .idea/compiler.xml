@@ -7,19 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="springboot" />
-        <module name="SpringBoot" />
+        <module name="Spring-Boot-Security-FetchAPI" />
+        <module name="JS" />
+        <module name="End" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SpringBoot" target="11" />
-      <module name="springboot" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="SpringBoot" options="-parameters" />
-      <module name="springboot" options="-parameters" />
+      <module name="End" options="-parameters" />
+      <module name="JS" options="-parameters" />
+      <module name="Spring-Boot-Security-FetchAPI" options="-parameters" />
     </option>
   </component>
 </project>

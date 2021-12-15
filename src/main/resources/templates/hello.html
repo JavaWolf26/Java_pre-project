@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello page</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	      crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hello page</title>
 </head>
 <body>
 <br/>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <div>
-                    <th:block th:each="msg : ${messages}">
-                        <h1 th:text="${msg}"></h1>
-                    </th:block>
-                    <h1>Welcome!</h1>
-                </div>
-                <p>
-                    <a class="btn btn-primary btn-large" href="/login">Sey login</a>
-                </p>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<div>
+					<h1>Hello!</h1>
+					<h1>Welcome!</h1>
+				</div>
+				<p>
+					<a class="btn btn-primary btn-large" th:href="@{/login}" content="true">Sey login</a>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
