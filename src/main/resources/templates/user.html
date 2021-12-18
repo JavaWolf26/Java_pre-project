@@ -46,10 +46,11 @@
 				<table class="table table-striped table-bordered">
 					<thead>
 					<tr class="col text-center">
-						<th>Id</th>
+						<th>ID</th>
 						<th>Full name</th>
 						<th>Age</th>
 						<th>E-mail</th>
+						<th>Enabled</th>
 						<th>Roles</th>
 					</tr>
 					</thead>
@@ -59,9 +60,10 @@
 						<td th:text="*{fullName}"></td>
 						<td th:text="*{age}"></td>
 						<td th:text="*{email}"></td>
+						<td th:text="*{enabled}"></td>
 						<td>
-							<th:block th:each="role : *{getRoles()}">
-								<span th:text="${role.name.substring(5)}"></span>
+							<th:block th:each="role, iterStat : *{getRoles()}">
+								<span th:text="${role.name.substring(5)} + ${!iterStat.last ? ', ' : ''}"></span>
 							</th:block>
 						</td>
 					</tr>

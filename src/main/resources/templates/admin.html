@@ -20,7 +20,7 @@
 			<h6><span>Your email:</span>&nbsp;
 				<b sec:authentication="name"></b>&nbsp;
 				<span>and your roles:</span>
-				<th:block th:each="role : ${#authentication.authorities}">
+				<th:block th:each="role : ${#authentication.getAuthorities()}">
 					&nbsp;<b th:text="${role.getAuthority().substring(5)}"></b>
 				</th:block>
 			</h6>
@@ -78,13 +78,12 @@
 									<thead class="thead-light">
 									<tr class="col text-center">
 										<th>ID</th>
-										<th>First name</th>
-										<th>Last name</th>
+										<th>Full name</th>
 										<th>Age</th>
 										<th>E-mail</th>
+										<th>Enabled</th>
 										<th>Roles</th>
-										<th>Edit</th>
-										<th>Delete</th>
+										<th>Action</th>
 									</tr>
 									</thead>
 									<tbody class="col text-center" id="users-table-rows"></tbody>
@@ -106,35 +105,37 @@
 										<form class="col text-center" role="form" id="user-addform" onsubmit="return false;">
 											<div>
 												<label class="form-label" for="newfirstname">First Name</label>
-												<p><input type="text" class="form-control" name="firstname" id="newfirstname" required/></p>
+												<p><input type="text" class="form-control" name="firstname" id="newfirstname"/></p>
 											</div>
 											<div>
 												<label class="form-label" for="newlastname">Last Name</label>
-												<p><input type="text" class="form-control" name="lastname" id="newlastname" required></p>
+												<p><input type="text" class="form-control" name="lastname" id="newlastname"></p>
 											</div>
 											<div>
 												<label class="form-label" for="newage">Age</label>
-												<p><input type="text" class="form-control" name="age" id="newage" required></p>
+												<p><input type="text" class="form-control" name="age" id="newage"></p>
 											</div>
 											<div>
 												<label class="form-label" for="newemail">E-mail</label>
 												<p><input type="email" class="form-control" name="email" id="newemail"
-												          aria-describedby="emailHelp" autocomplete="username" required></p>
+												          aria-describedby="emailHelp" autocomplete="username"></p>
 												<small id="emailHelp" class="form-text text-muted"></small>
 											</div>
-											<div id="password-div">
+											<div>
 												<label class="form-label" for="newpassword">Password</label>
 												<p><input type="password" class="form-control" name="password"
-												          id="newpassword" autocomplete="current-password" required></p>
+												          id="newpassword" autocomplete="current-password"></p>
 											</div>
 											<div>
 												<label class="form-label" for="newroles">Role</label>
-												<p><select size="2" multiple class="form-control" id="newroles" name="roles[]"
-												           required></select></p>
+												<p><select size="2" multiple class="form-control" id="newroles" name="roles[]">
+													<option value="2">USER</option>
+													<option value="1">ADMIN</option>
+												</select></p>
 											</div>
 											<div class="checkbox">
-												<label class="form-label" for="enabled">
-													<input type="checkbox" id="enabled" name="enabled">&nbsp;
+												<label class="form-label" for="newenabled">
+													<input type="checkbox" id="newenabled" name="enabled">&nbsp;
 													Is enabled
 												</label>
 											</div>
@@ -173,8 +174,8 @@
 								<td th:text="*{email}"></td>
 								<td th:text="*{enabled}"></td>
 								<td>
-									<th:block th:each="role : *{getRoles()}">
-										<span th:text="${role.name.substring(5)}"></span>
+									<th:block th:each="role, iterStat : *{getRoles()}">
+										<span th:text="${role.name.substring(5)} + ${!iterStat.last ? ', ' : ''}"></span>
 									</th:block>
 								</td>
 							</tr>
@@ -230,7 +231,14 @@
 								</div>
 								<div>
 									<label class="form-label" for="roles">Role</label>
-									<p><select multiple size="2" class="form-control" id="roles" name="roles[]"></select></p>
+									<p><select multiple size="2" class="form-control" id="roles" name="roles[]">
+									</select></p>
+								</div>
+								<div class="checkbox">
+									<label class="form-label" for="enabled">
+										<input type="checkbox" id="enabled" name="enabled">&nbsp;
+										Is enabled
+									</label>
 								</div>
 							</div>
 							<div class="col-md-3"></div>

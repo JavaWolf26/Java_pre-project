@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `users`
     `firstname` VARCHAR(255)          NULL,
     `lastname`  VARCHAR(255)          NULL,
     `age`       SMALLINT              NULL,
+    `enabled`   BIT                   NULL,
     `email`     VARCHAR(255)          NULL,
     `password`  VARCHAR(255)          NULL,
     PRIMARY KEY (`id`),

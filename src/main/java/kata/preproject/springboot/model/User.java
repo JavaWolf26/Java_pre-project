@@ -48,6 +48,9 @@ public final class User implements UserDetails {
     @Min(value = 0, message = "Age should be greater than 0")
     private Byte age;
 
+    @Column
+    private boolean enabled;
+
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -95,6 +98,6 @@ public final class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
