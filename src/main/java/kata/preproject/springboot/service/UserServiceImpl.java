@@ -1,13 +1,12 @@
 package kata.preproject.springboot.service;
 
+import kata.preproject.springboot.exception.UserNotFoundException;
 import kata.preproject.springboot.model.User;
+import kata.preproject.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import kata.preproject.springboot.exception.UserNotFoundException;
-import kata.preproject.springboot.repository.UserRepository;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "firstname", "lastname"));
+        return userRepository.findAll();
     }
 
     @Override

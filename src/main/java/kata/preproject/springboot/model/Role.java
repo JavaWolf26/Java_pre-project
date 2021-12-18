@@ -2,9 +2,9 @@ package kata.preproject.springboot.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
@@ -12,9 +12,6 @@ public final class Role extends AbstractEntity<Long> implements GrantedAuthority
 
     @Column(unique = true)
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
 
     public Role() {
     }

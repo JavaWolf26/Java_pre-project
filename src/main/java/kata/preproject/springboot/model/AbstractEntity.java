@@ -27,5 +27,4 @@ public abstract class AbstractEntity<PK extends Number> implements Persistable<P
     public boolean isNew() {
         return null == getId();
     }
-
 }
